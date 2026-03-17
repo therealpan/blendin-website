@@ -628,23 +628,30 @@ function resetModal(){
 function checkCode(){
   var code=codeInput.value.trim();
   if(!code)return;
-  modalImg.style.opacity='0';modalImg.style.transform='scale(.9)';
-  setTimeout(function(){
-    modalImg.src='assets/blendy-no.webp';
-    modalTitle.textContent=T[curLang].modal_denied;
-    modalSub.textContent='';
-    modalImg.style.opacity='1';modalImg.style.transform='scale(1)';
-  },200);
-  codeInput.classList.remove('shake');void codeInput.offsetWidth;codeInput.classList.add('shake');
-  codeInput.style.borderColor='var(--coral)';
-  var lines=T[curLang].denied;
-  modalDenied.textContent=lines[Math.floor(Math.random()*lines.length)];
-  modalDenied.classList.add('show');
-  setTimeout(function(){codeInput.style.borderColor='';codeInput.classList.remove('shake')},600);
+  /* Defer all DOM mutations to next frame to avoid blocking INP */
+  requestAnimationFrame(function(){
+    modalImg.style.opacity='0';modalImg.style.transform='scale(.9)';
+    setTimeout(function(){
+      modalImg.src='assets/blendy-no.webp';
+      modalTitle.textContent=T[curLang].modal_denied;
+      modalSub.textContent='';
+      requestAnimationFrame(function(){modalImg.style.opacity='1';modalImg.style.transform='scale(1)'});
+    },200);
+    /* Restart shake via class toggle — no forced reflow */
+    codeInput.classList.remove('shake');
+    requestAnimationFrame(function(){
+      codeInput.classList.add('shake');
+      codeInput.style.borderColor='var(--coral)';
+    });
+    var lines=T[curLang].denied;
+    modalDenied.textContent=lines[Math.floor(Math.random()*lines.length)];
+    modalDenied.classList.add('show');
+    setTimeout(function(){codeInput.style.borderColor='';codeInput.classList.remove('shake')},600);
+  });
 }
 modal.addEventListener('click',function(e){if(e.target===modal)closeLounge()});
 addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeLounge()});
-codeInput.addEventListener('keydown',function(e){if(e.key==='Enter')checkCode()});
+codeInput.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();checkCode()}});
 </script>
 </body>
 </html>
