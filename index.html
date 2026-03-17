@@ -8,18 +8,16 @@
 <meta name="author" content="PiirZ Digital">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://blendin.piirz.eu/">
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://blendin.piirz.eu/">
 <meta property="og:title" content="BlendIn — La community che conosce davvero i suoi membri">
-<meta property="og:description" content="L'AI che profila i partecipanti ai tuoi eventi di networking e compone tavoli dove ogni connessione conta. 5 minuti di conversazione, tavoli composti per complementarità.">
+<meta property="og:description" content="L'AI che profila i partecipanti ai tuoi eventi di networking e compone tavoli dove ogni connessione conta.">
 <meta property="og:image" content="https://blendin.piirz.eu/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="BlendIn — AI-powered profiling e matching per eventi di networking">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="BlendIn by PiirZ Digital">
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BlendIn — La community che conosce davvero i suoi membri">
 <meta name="twitter:description" content="L'AI che profila i partecipanti ai tuoi eventi e compone tavoli dove ogni connessione conta.">
@@ -30,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BlendIn","url":"https://blendin.piirz.eu","description":"AI-powered profiling e matching intelligente per eventi di networking. Interviste conversazionali su WhatsApp, profili a 7 dimensioni, composizione tavoli per complementarità.","applicationCategory":"BusinessApplication","operatingSystem":"Web, WhatsApp","image":"https://blendin.piirz.eu/assets/og-image.jpg","creator":{"@type":"Organization","name":"PiirZ Digital","url":"https://piirz.com","email":"blendin@piirz.com"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BlendIn","url":"https://blendin.piirz.eu","description":"AI-powered profiling e matching intelligente per eventi di networking.","applicationCategory":"BusinessApplication","operatingSystem":"Web, WhatsApp","image":"https://blendin.piirz.eu/assets/og-image.jpg","creator":{"@type":"Organization","name":"PiirZ Digital","url":"https://piirz.com","email":"blendin@piirz.com"}}</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0a0a0f;--bg2:#12121f;--gold:#e8a838;--gold-l:#f5d89a;--gold-dim:rgba(232,168,56,.12);--coral:#d4654a;--mint:#4ecdc4;--glass:rgba(255,255,255,.05);--gb:rgba(255,255,255,.08);--gh:rgba(255,255,255,.12);--txt:#f0ede6;--td:rgba(240,237,230,.55);--tb:rgba(240,237,230,.8);--fd:'Playfair Display',Georgia,serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;--e:cubic-bezier(.25,.46,.45,.94);--sp:cubic-bezier(.34,1.56,.64,1)}
@@ -69,6 +67,12 @@ h3{font-size:clamp(1.05rem,1.8vw,1.3rem);font-family:var(--fb);font-weight:600}
 .bo:hover{background:var(--gold-dim);border-color:var(--gold);transform:scale(1.04)}
 .bd{background:var(--bg);color:var(--txt);box-shadow:0 4px 20px rgba(0,0,0,.4)}
 .bd:hover{box-shadow:0 8px 35px rgba(0,0,0,.6);transform:scale(1.04)}
+
+/* LANG SWITCHER */
+.lang-sw{position:fixed;top:1.2rem;right:1.5rem;z-index:9500;display:flex;gap:.4rem;background:rgba(10,10,15,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--gb);border-radius:30px;padding:.35rem .5rem}
+.lang-sw button{background:0;border:0;cursor:pointer;font-size:1.25rem;line-height:1;padding:.15rem .2rem;border-radius:6px;opacity:.5;transition:opacity .2s,transform .15s}
+.lang-sw button:hover{opacity:.8;transform:scale(1.1)}
+.lang-sw button.active{opacity:1;transform:scale(1.15)}
 
 #s1{min-height:105vh}
 #s1 .sc-bg{background-image:url('assets/bg-entrance.webp')}
@@ -173,14 +177,7 @@ h3{font-size:clamp(1.05rem,1.8vw,1.3rem);font-family:var(--fb);font-weight:600}
 .s9c h2{color:var(--bg);margin-bottom:.6rem;text-shadow:0 2px 15px rgba(0,0,0,.15)}
 .s9s{font-size:1.1rem;color:rgba(10,10,15,.6);margin-bottom:2.2rem;max-width:480px;margin-left:auto;margin-right:auto}
 
-footer{display:block;background:var(--bg);border-top:1px solid var(--gb);padding:2rem 1.5rem;text-align:center}
-footer p{font-size:.78rem;color:var(--td)}
-footer a{color:var(--gold);text-decoration:none}
-footer a:hover{text-decoration:underline}
-.badges{display:flex;gap:.6rem;justify-content:center;margin-top:.6rem;flex-wrap:wrap}
-.badge{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:.25rem .6rem;border-radius:20px;border:1px solid var(--gb);color:var(--td)}
-
-/* MODAL — LOUNGE ENTRY */
+/* MODAL */
 .modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(5,5,10,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .4s var(--e)}
 .modal-overlay.open{display:flex;opacity:1}
 .modal-box{background:var(--bg2);border:1px solid var(--gb);border-radius:24px;padding:clamp(2rem,4vw,3rem);max-width:440px;width:90%;text-align:center;position:relative;transform:scale(.92);transition:transform .4s var(--sp)}
@@ -193,11 +190,18 @@ footer a:hover{text-decoration:underline}
 .modal-input{width:100%;padding:.85rem 1.2rem;font-family:var(--fm);font-size:1rem;letter-spacing:.15em;text-transform:uppercase;text-align:center;background:rgba(255,255,255,.04);border:1.5px solid var(--gb);border-radius:14px;color:var(--txt);outline:none;transition:border-color .3s}
 .modal-input::placeholder{color:var(--td);font-family:var(--fb);font-size:.85rem;letter-spacing:.05em;text-transform:none}
 .modal-input:focus{border-color:var(--gold)}
-.modal-input.shake{animation:inputShake .5s var(--e)}
-@keyframes inputShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.modal-input.shake{animation:ish .5s var(--e)}
+@keyframes ish{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 .modal-submit{margin-top:1rem;width:100%}
 .modal-denied{margin-top:1.2rem;font-size:.9rem;color:var(--coral);opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
 .modal-denied.show{opacity:1;transform:translateY(0)}
+
+footer{display:block;background:var(--bg);border-top:1px solid var(--gb);padding:2rem 1.5rem;text-align:center}
+footer p{font-size:.78rem;color:var(--td)}
+footer a{color:var(--gold);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.badges{display:flex;gap:.6rem;justify-content:center;margin-top:.6rem;flex-wrap:wrap}
+.badge{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:.25rem .6rem;border-radius:20px;border:1px solid var(--gb);color:var(--td)}
 
 @media(max-width:900px){.s2g,.s3g,.s5g,.s7g{grid-template-columns:1fr;gap:2rem}.s4s{grid-template-columns:1fr;max-width:380px;margin:0 auto}.sg{grid-template-columns:1fr 1fr}.dg{grid-template-columns:1fr}.s2b,.s5v,.s7v{order:-1}}
 @media(max-width:768px){.atmo{display:none}.gl{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.sr{grid-template-columns:1fr}}
@@ -209,132 +213,150 @@ footer a:hover{text-decoration:underline}
 <div class="atmo smoke" aria-hidden="true"></div>
 <div class="atmo bokeh" aria-hidden="true"></div>
 
+<!-- LANGUAGE SWITCHER -->
+<nav class="lang-sw" aria-label="Language selector">
+<button onclick="setLang('it')" title="Italiano" data-lang="it">🇮🇹</button>
+<button onclick="setLang('en')" title="English" data-lang="en">🇬🇧</button>
+<button onclick="setLang('fr')" title="Français" data-lang="fr">🇫🇷</button>
+<button onclick="setLang('de')" title="Deutsch" data-lang="de">🇩🇪</button>
+<button onclick="setLang('es')" title="Español" data-lang="es">🇪🇸</button>
+</nav>
+
+<!-- S1: ENTRANCE -->
 <section id="s1" class="sc">
 <div class="sc-bg"></div><div class="sc-ov"></div>
 <div class="sc-c s1c">
 <div class="s1p">BlendIn Lounge</div>
 <h1 class="s1h" id="h1"></h1>
-<p class="s1s">BlendIn ti aiuta a farli sedere al tavolo giusto. Ogni volta.</p>
-<div class="s1a"><button onclick="openLounge()" class="btn bg">Entra nel lounge</button><a href="https://cal.eu/piirz/30min" target="_blank" rel="noopener" class="btn bo">Parliamone</a></div>
+<p class="s1s" data-i="hero_sub"></p>
+<div class="s1a"><button onclick="openLounge()" class="btn bg" data-i="hero_cta1"></button><a href="https://cal.eu/piirz/30min" target="_blank" rel="noopener" class="btn bo" data-i="hero_cta2"></a></div>
 </div>
-<div class="sa"><span>Scorri</span><div class="sar"></div></div>
+<div class="sa"><span data-i="scroll"></span><div class="sar"></div></div>
 </section>
 
+<!-- S2: WELCOME -->
 <section id="s2" class="sc">
 <div class="sc-c"><div class="s2g">
-<div class="s2b" data-r="l"><img src="assets/blendy-welcome.webp" alt="Blendy ti accoglie" class="bl" width="380" height="631"></div>
+<div class="s2b" data-r="l"><img src="assets/blendy-welcome.webp" alt="Blendy" class="bl" width="380" height="631"></div>
 <div class="s2t">
-<h2 data-r="u">Ciao, sono <span class="ac">Blendy.</span></h2>
-<p data-r="u" style="transition-delay:.1s">Sono il tuo host per questa sera. Il mio lavoro? <span class="hl">Conoscerti in 5 minuti</span> e assicurarmi che tu sia seduto accanto alle persone giuste.</p>
-<p data-r="u" style="transition-delay:.2s">Non un form. Non un questionario. Una chiacchierata con Blendy — <span class="hl">su WhatsApp, al telefono, o dalla web app.</span></p>
-<p data-r="u" style="transition-delay:.3s;color:var(--td);font-family:var(--fd);font-style:italic;font-size:.95rem">"Fidati, voi due dovete parlare."</p>
+<h2 data-r="u" data-i="s2_title"></h2>
+<p data-r="u" style="transition-delay:.1s" data-i="s2_p1"></p>
+<p data-r="u" style="transition-delay:.2s" data-i="s2_p2"></p>
+<p data-r="u" style="transition-delay:.3s;color:var(--td);font-family:var(--fd);font-style:italic;font-size:.95rem" data-i="s2_quote"></p>
 </div>
 </div></div>
 </section>
 
+<!-- S3: PROBLEM -->
 <section id="s3" class="sc">
 <div class="sc-bg"></div><div class="sc-ov"></div>
 <div class="sc-c"><div class="s3g">
 <div>
-<h2 data-r="u">Tavoli casuali,<br><span class="ac">connessioni perse.</span></h2>
-<p data-r="u" style="transition-delay:.1s;color:var(--td);margin-bottom:2.2rem;font-size:1.02rem">Ogni evento di networking ha lo stesso difetto strutturale.</p>
-<div class="pn" data-r="u" style="transition-delay:.18s"><div class="pi">🪑</div><div><h3>Tre esperti marketing, zero valore</h3><p>Senza dati, chi offre le stesse cose finisce insieme.</p></div></div>
-<div class="pn" data-r="u" style="transition-delay:.28s"><div class="pi">📋</div><div><h3>L'85% ignora il form</h3><p>Completamento tra il 15 e il 30%. Troppo poco per il matching.</p></div></div>
-<div class="pn" data-r="u" style="transition-delay:.38s"><div class="pi">👻</div><div><h3>Follow-up fantasma</h3><p>Le connessioni di valore sono affidate alla buona volontà.</p></div></div>
+<h2 data-r="u" data-i="s3_title" data-i-html="1"></h2>
+<p data-r="u" style="transition-delay:.1s;color:var(--td);margin-bottom:2.2rem;font-size:1.02rem" data-i="s3_sub"></p>
+<div class="pn" data-r="u" style="transition-delay:.18s"><div class="pi">🪑</div><div><h3 data-i="s3_p1_t"></h3><p data-i="s3_p1_d"></p></div></div>
+<div class="pn" data-r="u" style="transition-delay:.28s"><div class="pi">📋</div><div><h3 data-i="s3_p2_t"></h3><p data-i="s3_p2_d"></p></div></div>
+<div class="pn" data-r="u" style="transition-delay:.38s"><div class="pi">👻</div><div><h3 data-i="s3_p3_t"></h3><p data-i="s3_p3_d"></p></div></div>
 </div>
-<div class="s3v" data-r="r" style="transition-delay:.15s"><img src="assets/blendy-listen.webp" alt="Blendy ascolta" class="bl" loading="lazy" decoding="async" width="420" height="698"></div>
+<div class="s3v" data-r="r" style="transition-delay:.15s"><img src="assets/blendy-listen.webp" alt="Blendy" class="bl" loading="lazy" decoding="async" width="420" height="698"></div>
 </div></div>
 </section>
 
+<!-- S4: JOURNEY -->
 <section id="s4">
 <div class="sc-c">
-<div class="s4h"><h2 data-r="u">Il barista che <span class="ac">conosce tutti.</span></h2><p data-r="u" style="transition-delay:.1s">Tre passi. Cinque minuti. Zero form.</p></div>
+<div class="s4h"><h2 data-r="u" data-i="s4_title" data-i-html="1"></h2><p data-r="u" style="transition-delay:.1s" data-i="s4_sub"></p></div>
 <div class="s4s">
-<div class="st gl" data-r="s" style="transition-delay:.1s"><div class="sti"><img src="assets/phone-chat.webp" alt="Conversazione con Blendy" loading="lazy" decoding="async" width="260" height="146"></div><div class="stn">01</div><h3>Parla con Blendy</h3><p>Su WhatsApp, al telefono, o dalla web app. Testo o voce, come preferisci.</p></div>
-<div class="st gl" data-r="s" style="transition-delay:.25s"><div class="sti"><img src="assets/radar-chart.webp" alt="Profilo 7 dimensioni" loading="lazy" decoding="async" width="260" height="146"></div><div class="stn">02</div><h3>Blendy capisce chi sei</h3><p>7 dimensioni estratte naturalmente dalla conversazione.</p></div>
-<div class="st gl" data-r="s" style="transition-delay:.4s"><div class="sti"><img src="assets/table-cards.webp" alt="Composizione tavoli" loading="lazy" decoding="async" width="260" height="146"></div><div class="stn">03</div><h3>I tavoli si compongono</h3><p>L'algoritmo crea tavoli dove ognuno dà e riceve.</p></div>
+<div class="st gl" data-r="s" style="transition-delay:.1s"><div class="sti"><img src="assets/phone-chat.webp" alt="" loading="lazy" decoding="async" width="260" height="146"></div><div class="stn">01</div><h3 data-i="s4_s1_t"></h3><p data-i="s4_s1_d"></p></div>
+<div class="st gl" data-r="s" style="transition-delay:.25s"><div class="sti"><img src="assets/radar-chart.webp" alt="" loading="lazy" decoding="async" width="260" height="146"></div><div class="stn">02</div><h3 data-i="s4_s2_t"></h3><p data-i="s4_s2_d"></p></div>
+<div class="st gl" data-r="s" style="transition-delay:.4s"><div class="sti"><img src="assets/table-cards.webp" alt="" loading="lazy" decoding="async" width="260" height="146"></div><div class="stn">03</div><h3 data-i="s4_s3_t"></h3><p data-i="s4_s3_d"></p></div>
 </div>
 </div>
 </section>
 
+<!-- S5: PROFILING -->
 <section id="s5" class="sc">
 <div class="sc-bg"></div><div class="sc-ov"></div>
 <div class="sc-c"><div class="s5g">
-<div class="s5v" data-r="l"><img src="assets/blendy-profile.webp" alt="Blendy prende appunti" class="bl" loading="lazy" decoding="async" width="460" height="764"></div>
+<div class="s5v" data-r="l"><img src="assets/blendy-profile.webp" alt="Blendy" class="bl" loading="lazy" decoding="async" width="460" height="764"></div>
 <div>
-<h2 data-r="u">Il tuo profilo,<br><span class="ac">al bancone.</span></h2>
-<p data-r="u" style="transition-delay:.1s;color:var(--td);font-size:1.02rem">Non un form. Una conversazione. Blendy scopre chi sei davvero.</p>
+<h2 data-r="u" data-i="s5_title" data-i-html="1"></h2>
+<p data-r="u" style="transition-delay:.1s;color:var(--td);font-size:1.02rem" data-i="s5_sub"></p>
 <div class="dg">
-<div class="dm gl" data-r="u" style="transition-delay:.12s"><div class="di">💼</div><div><div class="dn">Cosa fai</div><div class="dd">Il tuo mondo professionale</div></div></div>
-<div class="dm gl" data-r="u" style="transition-delay:.18s"><div class="di">🚀</div><div><div class="dn">A che punto sei</div><div class="dd">La fase del tuo percorso</div></div></div>
-<div class="dm gl" data-r="u" style="transition-delay:.24s"><div class="di">⚡</div><div><div class="dn">In cosa sei forte</div><div class="dd">Le tue competenze distintive</div></div></div>
-<div class="dm gl" data-r="u" style="transition-delay:.3s"><div class="di">🎯</div><div><div class="dn">Dove stai andando</div><div class="dd">I tuoi obiettivi a breve</div></div></div>
-<div class="dm gl" data-r="u" style="transition-delay:.36s"><div class="di">🤝</div><div><div class="dn">Cosa puoi dare</div><div class="dd">Il valore che porti al tavolo</div></div></div>
-<div class="dm gl" data-r="u" style="transition-delay:.42s"><div class="di">🔍</div><div><div class="dn">Cosa ti serve</div><div class="dd">Quello che stai cercando</div></div></div>
+<div class="dm gl" data-r="u" style="transition-delay:.12s"><div class="di">💼</div><div><div class="dn" data-i="d1_n"></div><div class="dd" data-i="d1_d"></div></div></div>
+<div class="dm gl" data-r="u" style="transition-delay:.18s"><div class="di">🚀</div><div><div class="dn" data-i="d2_n"></div><div class="dd" data-i="d2_d"></div></div></div>
+<div class="dm gl" data-r="u" style="transition-delay:.24s"><div class="di">⚡</div><div><div class="dn" data-i="d3_n"></div><div class="dd" data-i="d3_d"></div></div></div>
+<div class="dm gl" data-r="u" style="transition-delay:.3s"><div class="di">🎯</div><div><div class="dn" data-i="d4_n"></div><div class="dd" data-i="d4_d"></div></div></div>
+<div class="dm gl" data-r="u" style="transition-delay:.36s"><div class="di">🤝</div><div><div class="dn" data-i="d5_n"></div><div class="dd" data-i="d5_d"></div></div></div>
+<div class="dm gl" data-r="u" style="transition-delay:.42s"><div class="di">🔍</div><div><div class="dn" data-i="d6_n"></div><div class="dd" data-i="d6_d"></div></div></div>
 </div>
 </div>
 </div></div>
 </section>
 
+<!-- S6: MATCHING -->
 <section id="s6" class="sc">
 <div class="sc-bg"></div><div class="sc-ov"></div>
 <div class="sc-c s6c">
-<h2 data-r="u">Complementarità,<br><span class="ac">non somiglianza.</span></h2>
-<p data-r="u" style="transition-delay:.1s">Non cerchiamo persone uguali a te. Cerchiamo chi ha quello che ti manca.</p>
-<div class="s6i" data-r="s" style="transition-delay:.2s"><img src="assets/match-visual.webp" alt="Due profili che si connettono" loading="lazy" decoding="async" width="660" height="360"></div>
-<div class="ms" data-r="u" style="transition-delay:.3s"><div class="mn" data-target="87">0</div><div class="ml"><span>Match score</span><em>Complementarità perfetta</em></div></div>
-<div class="s6q" data-r="u" style="transition-delay:.4s"><p>"Se tu offri quello che lei cerca, e lei offre quello che tu cerchi — <span class="ac">stesso tavolo.</span>"</p></div>
+<h2 data-r="u" data-i="s6_title" data-i-html="1"></h2>
+<p data-r="u" style="transition-delay:.1s" data-i="s6_sub"></p>
+<div class="s6i" data-r="s" style="transition-delay:.2s"><img src="assets/match-visual.webp" alt="" loading="lazy" decoding="async" width="660" height="360"></div>
+<div class="ms" data-r="u" style="transition-delay:.3s"><div class="mn" data-target="87">0</div><div class="ml"><span data-i="s6_score"></span><em data-i="s6_score_sub"></em></div></div>
+<div class="s6q" data-r="u" style="transition-delay:.4s"><p data-i="s6_quote" data-i-html="1"></p></div>
 </div>
 </section>
 
+<!-- S7: TABLE COMP -->
 <section id="s7">
 <div class="sc-c"><div class="s7g">
-<div class="s7v" data-r="l"><img src="assets/blendy-matching.webp" alt="Blendy compone i tavoli" class="bl" loading="lazy" decoding="async" width="500" height="831"></div>
+<div class="s7v" data-r="l"><img src="assets/blendy-matching.webp" alt="Blendy" class="bl" loading="lazy" decoding="async" width="500" height="831"></div>
 <div class="s7t">
-<h2 data-r="u">Ogni tavolo,<br><span class="ac">una storia.</span></h2>
-<p data-r="u" style="transition-delay:.1s">Blendy analizza tutti i profili e compone i tavoli massimizzando le connessioni utili.</p>
+<h2 data-r="u" data-i="s7_title" data-i-html="1"></h2>
+<p data-r="u" style="transition-delay:.1s" data-i="s7_sub"></p>
 <div class="sr">
-<div class="si gl" data-r="u" style="transition-delay:.15s"><div class="sv" data-target="6">0</div><div class="sl">Persone per tavolo</div></div>
-<div class="si gl" data-r="u" style="transition-delay:.22s"><div class="sv" data-target="5" data-suffix="s">0</div><div class="sl">Tempo di calcolo</div></div>
-<div class="si gl" data-r="u" style="transition-delay:.29s"><div class="sv" data-target="200" data-suffix="+">0</div><div class="sl">Partecipanti gestiti</div></div>
+<div class="si gl" data-r="u" style="transition-delay:.15s"><div class="sv" data-target="6">0</div><div class="sl" data-i="s7_st1"></div></div>
+<div class="si gl" data-r="u" style="transition-delay:.22s"><div class="sv" data-target="5" data-suffix="s">0</div><div class="sl" data-i="s7_st2"></div></div>
+<div class="si gl" data-r="u" style="transition-delay:.29s"><div class="sv" data-target="200" data-suffix="+">0</div><div class="sl" data-i="s7_st3"></div></div>
 </div>
 </div>
 </div></div>
 </section>
 
+<!-- S8: RESULTS -->
 <section id="s8" class="sc">
 <div class="sc-bg"></div><div class="sc-ov"></div>
 <div class="sc-c s8c">
-<div class="s8b" data-r="s"><img src="assets/blendy-eureka.webp" alt="Blendy celebra" class="bl" loading="lazy" decoding="async" width="250" height="415"></div>
-<h2 data-r="u">I numeri del <span class="ac">lounge.</span></h2>
-<p data-r="u" style="transition-delay:.1s">Ogni dettaglio è progettato per funzionare.</p>
+<div class="s8b" data-r="s"><img src="assets/blendy-eureka.webp" alt="Blendy" class="bl" loading="lazy" decoding="async" width="250" height="415"></div>
+<h2 data-r="u" data-i="s8_title" data-i-html="1"></h2>
+<p data-r="u" style="transition-delay:.1s" data-i="s8_sub"></p>
 <div class="sg">
-<div class="sk gl" data-r="s" style="transition-delay:.1s"><div class="n" data-target="80" data-suffix="%">0</div><div class="l">Completion rate</div></div>
-<div class="sk gl" data-r="s" style="transition-delay:.18s"><div class="n" data-target="5" data-suffix=" min">0</div><div class="l">Tempo intervista</div></div>
-<div class="sk gl" data-r="s" style="transition-delay:.26s"><div class="n" data-target="3" data-suffix="s">0</div><div class="l">Latenza AI</div></div>
+<div class="sk gl" data-r="s" style="transition-delay:.1s"><div class="n" data-target="80" data-suffix="%">0</div><div class="l" data-i="s8_st1"></div></div>
+<div class="sk gl" data-r="s" style="transition-delay:.18s"><div class="n" data-target="5" data-suffix=" min">0</div><div class="l" data-i="s8_st2"></div></div>
+<div class="sk gl" data-r="s" style="transition-delay:.26s"><div class="n" data-target="3" data-suffix="s">0</div><div class="l" data-i="s8_st3"></div></div>
 </div>
 </div>
 </section>
 
+<!-- S9: CTA -->
 <section id="s9" class="sc">
 <div class="sc-bg"></div><div class="sc-ov"></div>
 <div class="sc-c s9c">
-<div class="s9b" data-r="s"><img src="assets/blendy-cta.webp" alt="Blendy ti indica" class="bl" loading="lazy" decoding="async" width="240" height="399"></div>
-<h2 data-r="u">Il tuo prossimo evento<br>inizia <span style="color:var(--bg)">qui.</span></h2>
-<p class="s9s" data-r="u" style="transition-delay:.1s">Ogni tavolo merita una storia. Iniziamo a scriverla.</p>
-<div data-r="u" style="transition-delay:.2s"><a href="https://cal.eu/piirz/30min" target="_blank" rel="noopener" class="btn bd">Parliamone</a></div>
+<div class="s9b" data-r="s"><img src="assets/blendy-cta.webp" alt="Blendy" class="bl" loading="lazy" decoding="async" width="240" height="399"></div>
+<h2 data-r="u" data-i="s9_title" data-i-html="1"></h2>
+<p class="s9s" data-r="u" style="transition-delay:.1s" data-i="s9_sub"></p>
+<div data-r="u" style="transition-delay:.2s"><a href="https://cal.eu/piirz/30min" target="_blank" rel="noopener" class="btn bd" data-i="s9_cta"></a></div>
 </div>
 </section>
 
-<!-- MODAL: LOUNGE ENTRY -->
+<!-- MODAL -->
 <div class="modal-overlay" id="loungeModal">
 <div class="modal-box">
-<button class="modal-close" onclick="closeLounge()" aria-label="Chiudi">&times;</button>
-<img src="assets/blendy-bouncer.webp" alt="Blendy controlla il biglietto" class="modal-blendy bl" id="modalImg" width="200" height="332">
-<div class="modal-title" id="modalTitle">Hai il biglietto?</div>
-<p class="modal-sub" id="modalSub">Inserisci il codice del tuo evento per entrare nel lounge.</p>
-<input type="text" class="modal-input" id="loungeCode" placeholder="Codice evento" maxlength="20" autocomplete="off" spellcheck="false">
-<button class="btn bg modal-submit" onclick="checkCode()">Entra</button>
+<button class="modal-close" onclick="closeLounge()" aria-label="Close">&times;</button>
+<img src="assets/blendy-bouncer.webp" alt="Blendy" class="modal-blendy bl" id="modalImg" width="200" height="332">
+<div class="modal-title" id="modalTitle"></div>
+<p class="modal-sub" id="modalSub"></p>
+<input type="text" class="modal-input" id="loungeCode" maxlength="20" autocomplete="off" spellcheck="false">
+<button class="btn bg modal-submit" onclick="checkCode()" data-i="modal_btn"></button>
 <div class="modal-denied" id="modalDenied"></div>
 </div>
 </div>
@@ -345,11 +367,223 @@ footer a:hover{text-decoration:underline}
 </footer>
 
 <script>
-!function(){var h=document.getElementById('h1'),i=0;
-['La community che conosce','davvero i suoi membri.'].forEach(function(l,li){
-if(li===1)h.appendChild(document.createElement('br'));
-l.split(' ').forEach(function(w){var s=document.createElement('span');s.className='w';s.style.animationDelay=(.5+i*.11)+'s';s.textContent=w+'\u00A0';h.appendChild(s);i++})})}();
+/* ====== i18n TRANSLATIONS ====== */
+var T={
+it:{
+  hero_l1:"La community che conosce",hero_l2:"davvero i suoi membri.",
+  hero_sub:"BlendIn ti aiuta a farli sedere al tavolo giusto. Ogni volta.",
+  hero_cta1:"Entra nel lounge",hero_cta2:"Parliamone",scroll:"Scorri",
+  s2_title:'Ciao, sono <span class="ac">Blendy.</span>',
+  s2_p1:'Sono il tuo host per questa sera. Il mio lavoro? <span class="hl">Conoscerti in 5 minuti</span> e assicurarmi che tu sia seduto accanto alle persone giuste.',
+  s2_p2:'Non un form. Non un questionario. Una chiacchierata con Blendy — <span class="hl">su WhatsApp, al telefono, o dalla web app.</span>',
+  s2_quote:'"Fidati, voi due dovete parlare."',
+  s3_title:'Tavoli casuali,<br><span class="ac">connessioni perse.</span>',s3_sub:"Ogni evento di networking ha lo stesso difetto strutturale.",
+  s3_p1_t:"Tre esperti marketing, zero valore",s3_p1_d:"Senza dati, chi offre le stesse cose finisce insieme.",
+  s3_p2_t:"L'85% ignora il form",s3_p2_d:"Completamento tra il 15 e il 30%. Troppo poco per il matching.",
+  s3_p3_t:"Follow-up fantasma",s3_p3_d:"Le connessioni di valore sono affidate alla buona volontà.",
+  s4_title:'Il barista che <span class="ac">conosce tutti.</span>',s4_sub:"Tre passi. Cinque minuti. Zero form.",
+  s4_s1_t:"Parla con Blendy",s4_s1_d:"Su WhatsApp, al telefono, o dalla web app. Testo o voce, come preferisci.",
+  s4_s2_t:"Blendy capisce chi sei",s4_s2_d:"7 dimensioni estratte naturalmente dalla conversazione.",
+  s4_s3_t:"I tavoli si compongono",s4_s3_d:"L'algoritmo crea tavoli dove ognuno dà e riceve.",
+  s5_title:'Il tuo profilo,<br><span class="ac">al bancone.</span>',s5_sub:"Non un form. Una conversazione. Blendy scopre chi sei davvero.",
+  d1_n:"Cosa fai",d1_d:"Il tuo mondo professionale",d2_n:"A che punto sei",d2_d:"La fase del tuo percorso",
+  d3_n:"In cosa sei forte",d3_d:"Le tue competenze distintive",d4_n:"Dove stai andando",d4_d:"I tuoi obiettivi a breve",
+  d5_n:"Cosa puoi dare",d5_d:"Il valore che porti al tavolo",d6_n:"Cosa ti serve",d6_d:"Quello che stai cercando",
+  s6_title:'Complementarità,<br><span class="ac">non somiglianza.</span>',s6_sub:"Non cerchiamo persone uguali a te. Cerchiamo chi ha quello che ti manca.",
+  s6_score:"Match score",s6_score_sub:"Complementarità perfetta",
+  s6_quote:'"Se tu offri quello che lei cerca, e lei offre quello che tu cerchi — <span class="ac">stesso tavolo.</span>"',
+  s7_title:'Ogni tavolo,<br><span class="ac">una storia.</span>',s7_sub:"Blendy analizza tutti i profili e compone i tavoli massimizzando le connessioni utili.",
+  s7_st1:"Persone per tavolo",s7_st2:"Tempo di calcolo",s7_st3:"Partecipanti gestiti",
+  s8_title:'I numeri del <span class="ac">lounge.</span>',s8_sub:"Ogni dettaglio è progettato per funzionare.",
+  s8_st1:"Completion rate",s8_st2:"Tempo intervista",s8_st3:"Latenza AI",
+  s9_title:'Il tuo prossimo evento<br>inizia <span style="color:var(--bg)">qui.</span>',s9_sub:"Ogni tavolo merita una storia. Iniziamo a scriverla.",s9_cta:"Parliamone",
+  modal_title:"Hai il biglietto?",modal_sub:"Inserisci il codice del tuo evento per entrare nel lounge.",modal_btn:"Entra",modal_ph:"Codice evento",modal_denied:"Accesso negato!",
+  denied:["Mmh, questo codice non mi convince. Sicuro di essere sulla lista?","Nope! Questo codice non apre nessuna porta. Riprova!","Bel tentativo, ma Blendy non si fa fregare.","Codice sbagliato. Forse hai bisogno di un invito?","Ehm, no. Questo codice apre al massimo il frigo di casa.","Non risulti in lista! Chiedi all'organizzatore il codice giusto.","Accesso negato. Ma con quel coraggio, saresti perfetto per il networking!","Questo codice ha lo stesso effetto di \"apriti sesamo\" su una porta automatica.","No no no. Ma se vuoi, posso offrirti un caffè virtuale."]
+},
+en:{
+  hero_l1:"The community that truly",hero_l2:"knows its members.",
+  hero_sub:"BlendIn helps you seat them at the right table. Every time.",
+  hero_cta1:"Enter the lounge",hero_cta2:"Let's talk",scroll:"Scroll",
+  s2_title:'Hi, I\'m <span class="ac">Blendy.</span>',
+  s2_p1:'I\'m your host tonight. My job? <span class="hl">Get to know you in 5 minutes</span> and make sure you sit next to the right people.',
+  s2_p2:'No forms. No questionnaires. A chat with Blendy — <span class="hl">on WhatsApp, by phone, or from the web app.</span>',
+  s2_quote:'"Trust me, you two need to talk."',
+  s3_title:'Random tables,<br><span class="ac">missed connections.</span>',s3_sub:"Every networking event has the same structural flaw.",
+  s3_p1_t:"Three marketing experts, zero value",s3_p1_d:"Without data, people offering the same things end up together.",
+  s3_p2_t:"85% ignore the form",s3_p2_d:"Completion rates between 15 and 30%. Not enough for any matching logic.",
+  s3_p3_t:"Ghost follow-ups",s3_p3_d:"Valuable connections are left to chance and goodwill.",
+  s4_title:'The bartender who <span class="ac">knows everyone.</span>',s4_sub:"Three steps. Five minutes. Zero forms.",
+  s4_s1_t:"Talk to Blendy",s4_s1_d:"On WhatsApp, by phone, or from the web app. Text or voice, your choice.",
+  s4_s2_t:"Blendy gets to know you",s4_s2_d:"7 dimensions extracted naturally from the conversation.",
+  s4_s3_t:"Tables compose themselves",s4_s3_d:"The algorithm builds tables where everyone gives and receives.",
+  s5_title:'Your profile,<br><span class="ac">at the bar.</span>',s5_sub:"Not a form. A conversation. Blendy discovers who you really are.",
+  d1_n:"What you do",d1_d:"Your professional world",d2_n:"Where you are",d2_d:"Your current stage",
+  d3_n:"What you're great at",d3_d:"Your distinctive skills",d4_n:"Where you're heading",d4_d:"Your short-term goals",
+  d5_n:"What you can give",d5_d:"The value you bring to the table",d6_n:"What you need",d6_d:"What you're looking for",
+  s6_title:'Complementarity,<br><span class="ac">not similarity.</span>',s6_sub:"We don't look for people like you. We look for people who have what you lack.",
+  s6_score:"Match score",s6_score_sub:"Perfect complementarity",
+  s6_quote:'"If you offer what she needs, and she offers what you need — <span class="ac">same table.</span>"',
+  s7_title:'Every table,<br><span class="ac">a story.</span>',s7_sub:"Blendy analyzes all profiles and composes tables maximizing useful connections.",
+  s7_st1:"People per table",s7_st2:"Calculation time",s7_st3:"Participants handled",
+  s8_title:'The lounge <span class="ac">numbers.</span>',s8_sub:"Every detail is designed to work.",
+  s8_st1:"Completion rate",s8_st2:"Interview time",s8_st3:"AI latency",
+  s9_title:'Your next event<br>starts <span style="color:var(--bg)">here.</span>',s9_sub:"Every table deserves a story. Let's write it together.",s9_cta:"Let's talk",
+  modal_title:"Got your ticket?",modal_sub:"Enter your event code to access the lounge.",modal_btn:"Enter",modal_ph:"Event code",modal_denied:"Access denied!",
+  denied:["Hmm, this code doesn't ring a bell. Sure you're on the list?","Nope! This code doesn't open any doors. Try again!","Nice try, but Blendy doesn't fall for that.","Wrong code. Maybe you need an invitation?","Nah. This code would barely open your fridge.","Not on the list! Ask your organizer for the right code.","Access denied. But with that courage, you'd be perfect for networking!","This code has the same effect as 'open sesame' on an automatic door.","No no no. But hey, can I offer you a virtual coffee?"]
+},
+fr:{
+  hero_l1:"La communauté qui connaît",hero_l2:"vraiment ses membres.",
+  hero_sub:"BlendIn vous aide à les placer à la bonne table. À chaque fois.",
+  hero_cta1:"Entrer dans le lounge",hero_cta2:"Parlons-en",scroll:"Défiler",
+  s2_title:'Salut, je suis <span class="ac">Blendy.</span>',
+  s2_p1:'Je suis votre hôte ce soir. Mon travail ? <span class="hl">Vous connaître en 5 minutes</span> et m\'assurer que vous êtes assis à côté des bonnes personnes.',
+  s2_p2:'Pas de formulaire. Pas de questionnaire. Une conversation avec Blendy — <span class="hl">sur WhatsApp, par téléphone ou depuis l\'app web.</span>',
+  s2_quote:'"Croyez-moi, vous deux devez parler."',
+  s3_title:'Tables aléatoires,<br><span class="ac">connexions manquées.</span>',s3_sub:"Chaque événement de networking a le même défaut structurel.",
+  s3_p1_t:"Trois experts marketing, zéro valeur",s3_p1_d:"Sans données, ceux qui offrent la même chose se retrouvent ensemble.",
+  s3_p2_t:"85% ignorent le formulaire",s3_p2_d:"Taux de complétion entre 15 et 30%. Insuffisant pour le matching.",
+  s3_p3_t:"Follow-up fantômes",s3_p3_d:"Les connexions précieuses sont laissées au hasard.",
+  s4_title:'Le barman qui <span class="ac">connaît tout le monde.</span>',s4_sub:"Trois étapes. Cinq minutes. Zéro formulaire.",
+  s4_s1_t:"Parlez à Blendy",s4_s1_d:"Sur WhatsApp, par téléphone ou l'app web. Texte ou voix, à vous de choisir.",
+  s4_s2_t:"Blendy apprend qui vous êtes",s4_s2_d:"7 dimensions extraites naturellement de la conversation.",
+  s4_s3_t:"Les tables se composent",s4_s3_d:"L'algorithme crée des tables où chacun donne et reçoit.",
+  s5_title:'Votre profil,<br><span class="ac">au comptoir.</span>',s5_sub:"Pas un formulaire. Une conversation. Blendy découvre qui vous êtes vraiment.",
+  d1_n:"Ce que vous faites",d1_d:"Votre univers professionnel",d2_n:"Où vous en êtes",d2_d:"L'étape de votre parcours",
+  d3_n:"Vos points forts",d3_d:"Vos compétences distinctives",d4_n:"Où vous allez",d4_d:"Vos objectifs à court terme",
+  d5_n:"Ce que vous apportez",d5_d:"La valeur que vous amenez",d6_n:"Ce qu'il vous faut",d6_d:"Ce que vous cherchez",
+  s6_title:'Complémentarité,<br><span class="ac">pas similitude.</span>',s6_sub:"On ne cherche pas des gens comme vous. On cherche ceux qui ont ce qui vous manque.",
+  s6_score:"Score de match",s6_score_sub:"Complémentarité parfaite",
+  s6_quote:'"Si vous offrez ce qu\'elle cherche, et elle offre ce que vous cherchez — <span class="ac">même table.</span>"',
+  s7_title:'Chaque table,<br><span class="ac">une histoire.</span>',s7_sub:"Blendy analyse tous les profils et compose les tables en maximisant les connexions utiles.",
+  s7_st1:"Personnes par table",s7_st2:"Temps de calcul",s7_st3:"Participants gérés",
+  s8_title:'Les chiffres du <span class="ac">lounge.</span>',s8_sub:"Chaque détail est conçu pour fonctionner.",
+  s8_st1:"Taux de complétion",s8_st2:"Temps d'entretien",s8_st3:"Latence IA",
+  s9_title:'Votre prochain événement<br>commence <span style="color:var(--bg)">ici.</span>',s9_sub:"Chaque table mérite une histoire. Écrivons-la ensemble.",s9_cta:"Parlons-en",
+  modal_title:"Vous avez votre billet ?",modal_sub:"Entrez le code de votre événement pour accéder au lounge.",modal_btn:"Entrer",modal_ph:"Code événement",modal_denied:"Accès refusé !",
+  denied:["Hmm, ce code ne me dit rien. Sûr d'être sur la liste ?","Non ! Ce code n'ouvre aucune porte. Réessayez !","Bel essai, mais Blendy ne se laisse pas avoir.","Mauvais code. Peut-être avez-vous besoin d'une invitation ?","Non. Ce code ouvrirait à peine votre frigo.","Pas sur la liste ! Demandez le bon code à l'organisateur.","Accès refusé. Mais avec ce courage, vous seriez parfait pour le networking !","Ce code a le même effet que « sésame ouvre-toi » sur une porte automatique.","Non non non. Mais je peux vous offrir un café virtuel ?"]
+},
+de:{
+  hero_l1:"Die Community, die ihre",hero_l2:"Mitglieder wirklich kennt.",
+  hero_sub:"BlendIn hilft Ihnen, sie an den richtigen Tisch zu setzen. Jedes Mal.",
+  hero_cta1:"Lounge betreten",hero_cta2:"Sprechen wir darüber",scroll:"Scrollen",
+  s2_title:'Hallo, ich bin <span class="ac">Blendy.</span>',
+  s2_p1:'Ich bin heute Abend Ihr Gastgeber. Mein Job? <span class="hl">Sie in 5 Minuten kennenlernen</span> und sicherstellen, dass Sie neben den richtigen Leuten sitzen.',
+  s2_p2:'Kein Formular. Kein Fragebogen. Ein Gespräch mit Blendy — <span class="hl">per WhatsApp, Telefon oder Web-App.</span>',
+  s2_quote:'"Vertrauen Sie mir, Sie beide müssen reden."',
+  s3_title:'Zufällige Tische,<br><span class="ac">verpasste Verbindungen.</span>',s3_sub:"Jedes Networking-Event hat denselben strukturellen Fehler.",
+  s3_p1_t:"Drei Marketing-Experten, null Mehrwert",s3_p1_d:"Ohne Daten landen Menschen mit dem gleichen Angebot zusammen.",
+  s3_p2_t:"85% ignorieren das Formular",s3_p2_d:"Ausfüllrate zwischen 15 und 30%. Zu wenig für jede Matching-Logik.",
+  s3_p3_t:"Geister-Follow-ups",s3_p3_d:"Wertvolle Verbindungen werden dem Zufall überlassen.",
+  s4_title:'Der Barkeeper, der <span class="ac">alle kennt.</span>',s4_sub:"Drei Schritte. Fünf Minuten. Null Formulare.",
+  s4_s1_t:"Sprich mit Blendy",s4_s1_d:"Per WhatsApp, Telefon oder Web-App. Text oder Sprache, wie Sie möchten.",
+  s4_s2_t:"Blendy lernt Sie kennen",s4_s2_d:"7 Dimensionen natürlich aus dem Gespräch extrahiert.",
+  s4_s3_t:"Tische ordnen sich selbst",s4_s3_d:"Der Algorithmus erstellt Tische, an denen jeder gibt und erhält.",
+  s5_title:'Ihr Profil,<br><span class="ac">an der Bar.</span>',s5_sub:"Kein Formular. Ein Gespräch. Blendy entdeckt, wer Sie wirklich sind.",
+  d1_n:"Was Sie tun",d1_d:"Ihre berufliche Welt",d2_n:"Wo Sie stehen",d2_d:"Ihre aktuelle Phase",
+  d3_n:"Worin Sie stark sind",d3_d:"Ihre besonderen Fähigkeiten",d4_n:"Wohin Sie gehen",d4_d:"Ihre kurzfristigen Ziele",
+  d5_n:"Was Sie geben können",d5_d:"Der Wert, den Sie mitbringen",d6_n:"Was Sie brauchen",d6_d:"Was Sie suchen",
+  s6_title:'Komplementarität,<br><span class="ac">nicht Ähnlichkeit.</span>',s6_sub:"Wir suchen nicht Menschen wie Sie. Wir suchen die, die haben, was Ihnen fehlt.",
+  s6_score:"Match-Score",s6_score_sub:"Perfekte Komplementarität",
+  s6_quote:'"Wenn Sie anbieten, was sie sucht, und sie anbietet, was Sie suchen — <span class="ac">selber Tisch.</span>"',
+  s7_title:'Jeder Tisch,<br><span class="ac">eine Geschichte.</span>',s7_sub:"Blendy analysiert alle Profile und setzt die Tische zusammen, um nützliche Verbindungen zu maximieren.",
+  s7_st1:"Personen pro Tisch",s7_st2:"Berechnungszeit",s7_st3:"Verwaltete Teilnehmer",
+  s8_title:'Die Zahlen der <span class="ac">Lounge.</span>',s8_sub:"Jedes Detail ist darauf ausgelegt zu funktionieren.",
+  s8_st1:"Abschlussrate",s8_st2:"Interview-Zeit",s8_st3:"KI-Latenz",
+  s9_title:'Ihr nächstes Event<br>beginnt <span style="color:var(--bg)">hier.</span>',s9_sub:"Jeder Tisch verdient eine Geschichte. Schreiben wir sie zusammen.",s9_cta:"Sprechen wir darüber",
+  modal_title:"Haben Sie Ihr Ticket?",modal_sub:"Geben Sie Ihren Event-Code ein, um die Lounge zu betreten.",modal_btn:"Eintreten",modal_ph:"Event-Code",modal_denied:"Zugang verweigert!",
+  denied:["Hmm, dieser Code überzeugt mich nicht. Sicher, dass Sie auf der Liste stehen?","Nein! Dieser Code öffnet keine Tür. Versuchen Sie es nochmal!","Netter Versuch, aber Blendy lässt sich nicht täuschen.","Falscher Code. Vielleicht brauchen Sie eine Einladung?","Nö. Dieser Code würde höchstens Ihren Kühlschrank öffnen.","Nicht auf der Liste! Fragen Sie den Veranstalter nach dem richtigen Code.","Zugang verweigert. Aber mit dem Mut wären Sie perfekt fürs Networking!","Dieser Code hat denselben Effekt wie 'Sesam öffne dich' bei einer automatischen Tür.","Nein nein nein. Aber darf ich Ihnen einen virtuellen Kaffee anbieten?"]
+},
+es:{
+  hero_l1:"La comunidad que realmente",hero_l2:"conoce a sus miembros.",
+  hero_sub:"BlendIn te ayuda a sentarlos en la mesa correcta. Cada vez.",
+  hero_cta1:"Entrar al lounge",hero_cta2:"Hablemos",scroll:"Desplazar",
+  s2_title:'Hola, soy <span class="ac">Blendy.</span>',
+  s2_p1:'Soy tu anfitrión esta noche. ¿Mi trabajo? <span class="hl">Conocerte en 5 minutos</span> y asegurarme de que te sientes al lado de las personas correctas.',
+  s2_p2:'Sin formularios. Sin cuestionarios. Una charla con Blendy — <span class="hl">por WhatsApp, teléfono o desde la web app.</span>',
+  s2_quote:'"Confía en mí, ustedes dos tienen que hablar."',
+  s3_title:'Mesas aleatorias,<br><span class="ac">conexiones perdidas.</span>',s3_sub:"Cada evento de networking tiene el mismo defecto estructural.",
+  s3_p1_t:"Tres expertos en marketing, cero valor",s3_p1_d:"Sin datos, quienes ofrecen lo mismo terminan juntos.",
+  s3_p2_t:"El 85% ignora el formulario",s3_p2_d:"Tasas de completado entre 15 y 30%. Insuficiente para el matching.",
+  s3_p3_t:"Follow-ups fantasma",s3_p3_d:"Las conexiones valiosas quedan al azar y la buena voluntad.",
+  s4_title:'El barman que <span class="ac">conoce a todos.</span>',s4_sub:"Tres pasos. Cinco minutos. Cero formularios.",
+  s4_s1_t:"Habla con Blendy",s4_s1_d:"Por WhatsApp, teléfono o la web app. Texto o voz, como prefieras.",
+  s4_s2_t:"Blendy te conoce",s4_s2_d:"7 dimensiones extraídas naturalmente de la conversación.",
+  s4_s3_t:"Las mesas se componen solas",s4_s3_d:"El algoritmo crea mesas donde todos dan y reciben.",
+  s5_title:'Tu perfil,<br><span class="ac">en la barra.</span>',s5_sub:"No es un formulario. Es una conversación. Blendy descubre quién eres realmente.",
+  d1_n:"Qué haces",d1_d:"Tu mundo profesional",d2_n:"Dónde estás",d2_d:"Tu etapa actual",
+  d3_n:"En qué eres fuerte",d3_d:"Tus habilidades distintivas",d4_n:"Hacia dónde vas",d4_d:"Tus objetivos a corto plazo",
+  d5_n:"Qué puedes dar",d5_d:"El valor que aportas a la mesa",d6_n:"Qué necesitas",d6_d:"Lo que estás buscando",
+  s6_title:'Complementariedad,<br><span class="ac">no similitud.</span>',s6_sub:"No buscamos personas como tú. Buscamos a quienes tienen lo que te falta.",
+  s6_score:"Puntuación de match",s6_score_sub:"Complementariedad perfecta",
+  s6_quote:'"Si tú ofreces lo que ella busca, y ella ofrece lo que tú buscas — <span class="ac">misma mesa.</span>"',
+  s7_title:'Cada mesa,<br><span class="ac">una historia.</span>',s7_sub:"Blendy analiza todos los perfiles y compone las mesas maximizando las conexiones útiles.",
+  s7_st1:"Personas por mesa",s7_st2:"Tiempo de cálculo",s7_st3:"Participantes gestionados",
+  s8_title:'Los números del <span class="ac">lounge.</span>',s8_sub:"Cada detalle está diseñado para funcionar.",
+  s8_st1:"Tasa de completado",s8_st2:"Tiempo de entrevista",s8_st3:"Latencia IA",
+  s9_title:'Tu próximo evento<br>empieza <span style="color:var(--bg)">aquí.</span>',s9_sub:"Cada mesa merece una historia. Escribámosla juntos.",s9_cta:"Hablemos",
+  modal_title:"¿Tienes tu entrada?",modal_sub:"Introduce el código de tu evento para acceder al lounge.",modal_btn:"Entrar",modal_ph:"Código de evento",modal_denied:"¡Acceso denegado!",
+  denied:["Hmm, este código no me convence. ¿Seguro que estás en la lista?","¡No! Este código no abre ninguna puerta. ¡Inténtalo de nuevo!","Buen intento, pero a Blendy no le engañan.","Código incorrecto. ¿Quizás necesitas una invitación?","No. Este código como mucho abriría tu nevera.","¡No estás en la lista! Pide el código correcto al organizador.","Acceso denegado. Pero con ese valor, ¡serías perfecto para el networking!","Este código tiene el mismo efecto que 'ábrete sésamo' en una puerta automática.","No no no. Pero oye, ¿te puedo ofrecer un café virtual?"]
+}
+};
 
+/* ====== i18n ENGINE ====== */
+var curLang='it';
+function detectLang(){
+  var bl=navigator.language||navigator.userLanguage||'it';
+  var short=bl.substring(0,2).toLowerCase();
+  return T[short]?short:'it';
+}
+function setLang(lang){
+  if(!T[lang])return;
+  curLang=lang;
+  localStorage.setItem('bl_lang',lang);
+  document.documentElement.lang=lang;
+  /* Update text elements */
+  document.querySelectorAll('[data-i]').forEach(function(el){
+    var key=el.getAttribute('data-i');
+    var val=T[lang][key];
+    if(!val)return;
+    if(el.hasAttribute('data-i-html'))el.innerHTML=val;
+    else el.textContent=val;
+  });
+  /* Update headline */
+  buildHeadline(lang);
+  /* Update modal */
+  document.getElementById('modalTitle').textContent=T[lang].modal_title;
+  document.getElementById('modalSub').textContent=T[lang].modal_sub;
+  document.getElementById('loungeCode').placeholder=T[lang].modal_ph;
+  /* Update s2 paragraphs that use innerHTML */
+  var s2ps=document.querySelectorAll('.s2t p[data-i]');
+  s2ps.forEach(function(p){var k=p.getAttribute('data-i');if(T[lang][k])p.innerHTML=T[lang][k]});
+  /* Flag buttons */
+  document.querySelectorAll('.lang-sw button').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-lang')===lang);
+  });
+}
+
+function buildHeadline(lang){
+  var h=document.getElementById('h1');
+  h.innerHTML='';
+  var lines=[T[lang].hero_l1,T[lang].hero_l2];
+  var i=0;
+  lines.forEach(function(l,li){
+    if(li===1)h.appendChild(document.createElement('br'));
+    l.split(' ').forEach(function(w){
+      var s=document.createElement('span');
+      s.className='w';
+      s.style.animationDelay=(.5+i*.11)+'s';
+      s.textContent=w+'\u00A0';
+      h.appendChild(s);
+      i++;
+    });
+  });
+}
+
+/* ====== INIT LANGUAGE ====== */
+var savedLang=localStorage.getItem('bl_lang');
+setLang(savedLang||detectLang());
+
+/* ====== INTERSECTION OBSERVER ====== */
 !function(){var o=new IntersectionObserver(function(e){e.forEach(function(e){if(!e.isIntersecting)return;var t=e.target;
 if(t.hasAttribute('data-r'))t.classList.add('v');
 if(t.dataset.target!==undefined&&!t.dataset.counted){t.dataset.counted='1';var g=parseInt(t.dataset.target);if(isNaN(g))return;
@@ -357,22 +591,12 @@ var p=t.dataset.prefix||'',x=t.dataset.suffix||'',d=900,s=performance.now();
 !function k(n){var r=Math.min((n-s)/d,1);t.textContent=p+Math.round((1-Math.pow(1-r,3))*g)+x;if(r<1)requestAnimationFrame(k)}(s)}})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('[data-r],[data-target]').forEach(function(e){o.observe(e)})}();
 
+/* ====== PARALLAX ====== */
 !function(){if(matchMedia('(prefers-reduced-motion:reduce)').matches||innerWidth<900)return;
 var b=document.querySelectorAll('.sc-bg'),t=false;
 addEventListener('scroll',function(){if(!t){requestAnimationFrame(function(){for(var i=0;i<b.length;i++){var r=b[i].parentElement.getBoundingClientRect();b[i].style.transform='translateY('+(r.top+r.height/2-innerHeight/2)*.07+'px) scale(1.06)'}t=false});t=true}})}();
 
-/* LOUNGE MODAL */
-var deniedLines=[
-"Mmh, questo codice non mi convince. Sicuro di essere sulla lista?",
-"Nope! Questo codice non apre nessuna porta. Riprova!",
-"Bel tentativo, ma Blendy non si fa fregare.",
-"Codice sbagliato. Forse hai bisogno di un invito?",
-"Ehm, no. Questo codice apre al massimo il frigo di casa.",
-"Non risulti in lista! Chiedi all'organizzatore il codice giusto.",
-"Accesso negato. Ma con quel coraggio, saresti perfetto per il networking!",
-"Questo codice ha lo stesso effetto di \"apriti sesamo\" su una porta automatica.",
-"No no no. Ma se vuoi, posso offrirti un caffè virtuale."
-];
+/* ====== LOUNGE MODAL ====== */
 var modal=document.getElementById('loungeModal'),
     modalImg=document.getElementById('modalImg'),
     modalTitle=document.getElementById('modalTitle'),
@@ -392,9 +616,9 @@ function closeLounge(){
 }
 function resetModal(){
   modalImg.src='assets/blendy-bouncer.webp';
-  modalImg.alt='Blendy controlla il biglietto';
-  modalTitle.textContent='Hai il biglietto?';
-  modalSub.textContent='Inserisci il codice del tuo evento per entrare nel lounge.';
+  modalTitle.textContent=T[curLang].modal_title;
+  modalSub.textContent=T[curLang].modal_sub;
+  codeInput.placeholder=T[curLang].modal_ph;
   modalDenied.classList.remove('show');
   modalDenied.textContent='';
   codeInput.value='';
@@ -404,37 +628,22 @@ function resetModal(){
 function checkCode(){
   var code=codeInput.value.trim();
   if(!code)return;
-  /* Swap to "no" Blendy */
-  modalImg.style.opacity='0';
-  modalImg.style.transform='scale(.9)';
+  modalImg.style.opacity='0';modalImg.style.transform='scale(.9)';
   setTimeout(function(){
     modalImg.src='assets/blendy-no.webp';
-    modalImg.alt='Blendy dice no';
-    modalTitle.textContent='Accesso negato!';
+    modalTitle.textContent=T[curLang].modal_denied;
     modalSub.textContent='';
-    modalImg.style.opacity='1';
-    modalImg.style.transform='scale(1)';
+    modalImg.style.opacity='1';modalImg.style.transform='scale(1)';
   },200);
-  /* Shake input */
-  codeInput.classList.remove('shake');
-  void codeInput.offsetWidth;
-  codeInput.classList.add('shake');
+  codeInput.classList.remove('shake');void codeInput.offsetWidth;codeInput.classList.add('shake');
   codeInput.style.borderColor='var(--coral)';
-  /* Random denied message */
-  var msg=deniedLines[Math.floor(Math.random()*deniedLines.length)];
-  modalDenied.textContent=msg;
+  var lines=T[curLang].denied;
+  modalDenied.textContent=lines[Math.floor(Math.random()*lines.length)];
   modalDenied.classList.add('show');
-  /* Reset after 3s for retry */
-  setTimeout(function(){
-    codeInput.style.borderColor='';
-    codeInput.classList.remove('shake');
-  },600);
+  setTimeout(function(){codeInput.style.borderColor='';codeInput.classList.remove('shake')},600);
 }
-/* Close on overlay click */
 modal.addEventListener('click',function(e){if(e.target===modal)closeLounge()});
-/* Close on Escape */
 addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeLounge()});
-/* Enter to submit */
 codeInput.addEventListener('keydown',function(e){if(e.key==='Enter')checkCode()});
 </script>
 </body>
