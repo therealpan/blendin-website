@@ -164,6 +164,25 @@ footer a:hover{text-decoration:underline}
 .badges{display:flex;gap:.6rem;justify-content:center;margin-top:.6rem;flex-wrap:wrap}
 .badge{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:.25rem .6rem;border-radius:20px;border:1px solid var(--gb);color:var(--td)}
 
+/* MODAL — LOUNGE ENTRY */
+.modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(5,5,10,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .4s var(--e)}
+.modal-overlay.open{display:flex;opacity:1}
+.modal-box{background:var(--bg2);border:1px solid var(--gb);border-radius:24px;padding:clamp(2rem,4vw,3rem);max-width:440px;width:90%;text-align:center;position:relative;transform:scale(.92);transition:transform .4s var(--sp)}
+.modal-overlay.open .modal-box{transform:scale(1)}
+.modal-close{position:absolute;top:1rem;right:1.2rem;background:0;border:0;color:var(--td);font-size:1.4rem;cursor:pointer;transition:color .2s}
+.modal-close:hover{color:var(--txt)}
+.modal-blendy{width:clamp(140px,35vw,200px);margin:0 auto 1.2rem;transition:opacity .3s,transform .3s}
+.modal-title{font-family:var(--fd);font-size:1.4rem;color:var(--txt);margin-bottom:.3rem}
+.modal-sub{font-size:.9rem;color:var(--td);margin-bottom:1.5rem}
+.modal-input{width:100%;padding:.85rem 1.2rem;font-family:var(--fm);font-size:1rem;letter-spacing:.15em;text-transform:uppercase;text-align:center;background:rgba(255,255,255,.04);border:1.5px solid var(--gb);border-radius:14px;color:var(--txt);outline:none;transition:border-color .3s}
+.modal-input::placeholder{color:var(--td);font-family:var(--fb);font-size:.85rem;letter-spacing:.05em;text-transform:none}
+.modal-input:focus{border-color:var(--gold)}
+.modal-input.shake{animation:inputShake .5s var(--e)}
+@keyframes inputShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.modal-submit{margin-top:1rem;width:100%}
+.modal-denied{margin-top:1.2rem;font-size:.9rem;color:var(--coral);opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.modal-denied.show{opacity:1;transform:translateY(0)}
+
 @media(max-width:900px){.s2g,.s3g,.s5g,.s7g{grid-template-columns:1fr;gap:2rem}.s4s{grid-template-columns:1fr;max-width:380px;margin:0 auto}.sg{grid-template-columns:1fr 1fr}.dg{grid-template-columns:1fr}.s2b,.s5v,.s7v{order:-1}}
 @media(max-width:768px){.atmo{display:none}.gl{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.sr{grid-template-columns:1fr}}
 @media(max-width:500px){.s1c{padding-top:22vh}}
@@ -180,7 +199,7 @@ footer a:hover{text-decoration:underline}
 <div class="s1p">BlendIn Lounge</div>
 <h1 class="s1h" id="h1"></h1>
 <p class="s1s">L'AI che profila i partecipanti ai tuoi eventi di networking e compone tavoli dove ogni connessione conta.</p>
-<div class="s1a"><a href="#s2" class="btn bg">Entra nel lounge</a><a href="https://cal.eu/piirz/30min" target="_blank" rel="noopener" class="btn bo">Parliamone</a></div>
+<div class="s1a"><button onclick="openLounge()" class="btn bg">Entra nel lounge</button><a href="https://cal.eu/piirz/30min" target="_blank" rel="noopener" class="btn bo">Parliamone</a></div>
 </div>
 <div class="sa"><span>Scorri</span><div class="sar"></div></div>
 </section>
@@ -292,6 +311,19 @@ footer a:hover{text-decoration:underline}
 </div>
 </section>
 
+<!-- MODAL: LOUNGE ENTRY -->
+<div class="modal-overlay" id="loungeModal">
+<div class="modal-box">
+<button class="modal-close" onclick="closeLounge()" aria-label="Chiudi">&times;</button>
+<img src="assets/blendy-bouncer.webp" alt="Blendy controlla il biglietto" class="modal-blendy bl" id="modalImg" width="200" height="332">
+<div class="modal-title" id="modalTitle">Hai il biglietto?</div>
+<p class="modal-sub" id="modalSub">Inserisci il codice del tuo evento per entrare nel lounge.</p>
+<input type="text" class="modal-input" id="loungeCode" placeholder="Codice evento" maxlength="20" autocomplete="off" spellcheck="false">
+<button class="btn bg modal-submit" onclick="checkCode()">Entra</button>
+<div class="modal-denied" id="modalDenied"></div>
+</div>
+</div>
+
 <footer>
 <p><strong>BlendIn</strong> by <a href="https://piirz.com">PiirZ Digital</a> · <a href="/privacy">Privacy</a> · blendin@piirz.com</p>
 <div class="badges"><span class="badge">🔒 GDPR by design</span><span class="badge">🇮🇹 Made in Italy</span><span class="badge">🤖 PiirZ Prompt Router</span></div>
@@ -313,6 +345,82 @@ document.querySelectorAll('[data-r],[data-target]').forEach(function(e){o.observ
 !function(){if(matchMedia('(prefers-reduced-motion:reduce)').matches||innerWidth<900)return;
 var b=document.querySelectorAll('.sc-bg'),t=false;
 addEventListener('scroll',function(){if(!t){requestAnimationFrame(function(){for(var i=0;i<b.length;i++){var r=b[i].parentElement.getBoundingClientRect();b[i].style.transform='translateY('+(r.top+r.height/2-innerHeight/2)*.07+'px) scale(1.06)'}t=false});t=true}})}();
+
+/* LOUNGE MODAL */
+var deniedLines=[
+"Mmh, questo codice non mi convince. Sicuro di essere sulla lista?",
+"Nope! Questo codice non apre nessuna porta. Riprova!",
+"Bel tentativo, ma Blendy non si fa fregare.",
+"Codice sbagliato. Forse hai bisogno di un invito?",
+"Ehm, no. Questo codice apre al massimo il frigo di casa.",
+"Non risulti in lista! Chiedi all'organizzatore il codice giusto.",
+"Accesso negato. Ma con quel coraggio, saresti perfetto per il networking!",
+"Questo codice ha lo stesso effetto di \"apriti sesamo\" su una porta automatica.",
+"No no no. Ma se vuoi, posso offrirti un caffè virtuale."
+];
+var modal=document.getElementById('loungeModal'),
+    modalImg=document.getElementById('modalImg'),
+    modalTitle=document.getElementById('modalTitle'),
+    modalSub=document.getElementById('modalSub'),
+    modalDenied=document.getElementById('modalDenied'),
+    codeInput=document.getElementById('loungeCode');
+
+function openLounge(){
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+  resetModal();
+  setTimeout(function(){codeInput.focus()},400);
+}
+function closeLounge(){
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+}
+function resetModal(){
+  modalImg.src='assets/blendy-bouncer.webp';
+  modalImg.alt='Blendy controlla il biglietto';
+  modalTitle.textContent='Hai il biglietto?';
+  modalSub.textContent='Inserisci il codice del tuo evento per entrare nel lounge.';
+  modalDenied.classList.remove('show');
+  modalDenied.textContent='';
+  codeInput.value='';
+  codeInput.classList.remove('shake');
+  codeInput.style.borderColor='';
+}
+function checkCode(){
+  var code=codeInput.value.trim();
+  if(!code)return;
+  /* Swap to "no" Blendy */
+  modalImg.style.opacity='0';
+  modalImg.style.transform='scale(.9)';
+  setTimeout(function(){
+    modalImg.src='assets/blendy-no.webp';
+    modalImg.alt='Blendy dice no';
+    modalTitle.textContent='Accesso negato!';
+    modalSub.textContent='';
+    modalImg.style.opacity='1';
+    modalImg.style.transform='scale(1)';
+  },200);
+  /* Shake input */
+  codeInput.classList.remove('shake');
+  void codeInput.offsetWidth;
+  codeInput.classList.add('shake');
+  codeInput.style.borderColor='var(--coral)';
+  /* Random denied message */
+  var msg=deniedLines[Math.floor(Math.random()*deniedLines.length)];
+  modalDenied.textContent=msg;
+  modalDenied.classList.add('show');
+  /* Reset after 3s for retry */
+  setTimeout(function(){
+    codeInput.style.borderColor='';
+    codeInput.classList.remove('shake');
+  },600);
+}
+/* Close on overlay click */
+modal.addEventListener('click',function(e){if(e.target===modal)closeLounge()});
+/* Close on Escape */
+addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeLounge()});
+/* Enter to submit */
+codeInput.addEventListener('keydown',function(e){if(e.key==='Enter')checkCode()});
 </script>
 </body>
 </html>
