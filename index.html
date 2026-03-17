@@ -239,9 +239,9 @@ footer a:hover{text-decoration:underline}
 <div class="sc-c"><div class="s2g">
 <div class="s2b" data-r="l"><img src="assets/blendy-welcome.webp" alt="Blendy" class="bl" width="380" height="631"></div>
 <div class="s2t">
-<h2 data-r="u" data-i="s2_title"></h2>
-<p data-r="u" style="transition-delay:.1s" data-i="s2_p1"></p>
-<p data-r="u" style="transition-delay:.2s" data-i="s2_p2"></p>
+<h2 data-r="u" data-i="s2_title" data-i-html="1"></h2>
+<p data-r="u" style="transition-delay:.1s" data-i="s2_p1" data-i-html="1"></p>
+<p data-r="u" style="transition-delay:.2s" data-i="s2_p2" data-i-html="1"></p>
 <p data-r="u" style="transition-delay:.3s;color:var(--td);font-family:var(--fd);font-style:italic;font-size:.95rem" data-i="s2_quote"></p>
 </div>
 </div></div>
@@ -552,9 +552,6 @@ function setLang(lang){
   document.getElementById('modalTitle').textContent=T[lang].modal_title;
   document.getElementById('modalSub').textContent=T[lang].modal_sub;
   document.getElementById('loungeCode').placeholder=T[lang].modal_ph;
-  /* Update s2 paragraphs that use innerHTML */
-  var s2ps=document.querySelectorAll('.s2t p[data-i]');
-  s2ps.forEach(function(p){var k=p.getAttribute('data-i');if(T[lang][k])p.innerHTML=T[lang][k]});
   /* Flag buttons */
   document.querySelectorAll('.lang-sw button').forEach(function(b){
     b.classList.toggle('active',b.getAttribute('data-lang')===lang);
