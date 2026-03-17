@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlendIn — Entra nel Lounge</title>
+<meta name="description" content="BlendIn profila i partecipanti ai tuoi eventi e compone tavoli dove ogni connessione conta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg2:#12121f;--gold:#e8a838;--gold-l:#f5d89a;--gold-dim:rgba(232,168,56,.12);
+  --teal:#16213e;--coral:#d4654a;--mint:#4ecdc4;
+  --glass:rgba(255,255,255,.05);--glass-b:rgba(255,255,255,.08);--glass-h:rgba(255,255,255,.12);
+  --txt:#f0ede6;--txt-d:rgba(240,237,230,.55);--txt-b:rgba(240,237,230,.8);
+  --ff-d:'Playfair Display',Georgia,serif;--ff-b:'DM Sans',sans-serif;--ff-m:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.25,.46,.45,.94);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--txt-b);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* FILM GRAIN */
+body::after{content:'';position:fixed;inset:0;z-index:10000;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px}
+
+/* SMOKE OVERLAY */
+.smoke-layer{position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:url('assets/smoke.png') center/cover no-repeat;opacity:.15;mix-blend-mode:screen;
+  animation:smokeFloat 20s ease-in-out infinite alternate}
+@keyframes smokeFloat{0%{transform:translateX(-3%) scale(1.05)}100%{transform:translateX(3%) scale(1.1)}}
+
+/* BOKEH OVERLAY */
+.bokeh-layer{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:url('assets/bokeh.png') center/cover no-repeat;opacity:.08;mix-blend-mode:screen;
+  animation:bokehPulse 8s ease-in-out infinite alternate}
+@keyframes bokehPulse{0%{opacity:.06}100%{opacity:.12}}
+
+/* ====== SCENE: FULL-SCREEN SCROLL PANELS ====== */
+.scene{position:relative;width:100%;min-height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.scene-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;transition:opacity 1.2s}
+.scene-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(10,10,15,.65) 100%)}
+.scene-content{position:relative;z-index:5;width:100%;max-width:1200px;padding:2rem clamp(1.5rem,5vw,4rem)}
+.scene-overlay{position:absolute;inset:0;z-index:3;background:linear-gradient(to bottom,rgba(10,10,15,.2) 0%,rgba(10,10,15,.6) 60%,var(--bg) 100%)}
+
+/* REVEAL SYSTEM */
+.r{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.r.v{opacity:1;transform:translateY(0)}
+.r-s{opacity:0;transform:scale(.88);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.r-s.v{opacity:1;transform:scale(1)}
+.r-l{opacity:0;transform:translateX(-60px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.r-l.v{opacity:1;transform:translateX(0)}
+.r-r{opacity:0;transform:translateX(60px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.r-r.v{opacity:1;transform:translateX(0)}
+[data-delay="1"]{transition-delay:.12s}[data-delay="2"]{transition-delay:.24s}[data-delay="3"]{transition-delay:.36s}
+[data-delay="4"]{transition-delay:.48s}[data-delay="5"]{transition-delay:.6s}[data-delay="6"]{transition-delay:.72s}
+
+/* TYPOGRAPHY */
+h1,h2,h3{font-family:var(--ff-d);color:var(--txt);font-weight:700;line-height:1.1}
+h1{font-size:clamp(2.8rem,7vw,6rem)}
+h2{font-size:clamp(2rem,4.5vw,3.5rem)}
+h3{font-size:clamp(1.1rem,2vw,1.4rem);font-family:var(--ff-b);font-weight:600}
+.accent{color:var(--gold)}
+.mono{font-family:var(--ff-m)}
+.italic{font-style:italic}
+
+/* BLENDY */
+.blendy{filter:drop-shadow(0 15px 50px rgba(0,0,0,.6));transition:transform .6s var(--ease)}
+.blendy:hover{transform:scale(1.03)}
+
+/* GLASS */
+.glass{background:var(--glass);border:1px solid var(--glass-b);border-radius:20px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform .35s var(--ease),border-color .3s,box-shadow .3s}
+.glass:hover{transform:translateY(-5px);border-color:var(--glass-h);box-shadow:0 25px 70px rgba(0,0,0,.35)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--ff-b);font-weight:600;font-size:.9rem;
+  letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:1rem 2.5rem;border-radius:60px;
+  border:none;cursor:pointer;transition:transform .15s var(--spring),box-shadow .3s;position:relative;overflow:hidden}
+.btn:active{transform:scale(.96)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#d4942a);color:var(--bg);box-shadow:0 4px 25px rgba(232,168,56,.35)}
+.btn-gold:hover{box-shadow:0 8px 40px rgba(232,168,56,.55);transform:scale(1.04)}
+.btn-ghost{background:transparent;color:var(--gold);border:1.5px solid rgba(232,168,56,.4)}
+.btn-ghost:hover{background:var(--gold-dim);border-color:var(--gold);transform:scale(1.04)}
+.btn-dark{background:var(--bg);color:var(--txt);box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.btn-dark:hover{box-shadow:0 8px 35px rgba(0,0,0,.6);transform:scale(1.04)}
+
+/* ============================================= */
+/*   SCENE 1 — ENTRANCE (THE DOOR)              */
+/* ============================================= */
+#entrance{min-height:110vh}
+#entrance .scene-bg{background-image:url('assets/bg-entrance.png')}
+#entrance .scene-overlay{background:linear-gradient(to bottom,rgba(10,10,15,.1) 0%,rgba(10,10,15,.4) 50%,var(--bg) 100%)}
+.entrance-content{text-align:center;padding-top:15vh}
+.entrance-content .pre-title{font-size:.85rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;
+  opacity:0;animation:fadeIn 1s .5s var(--ease) forwards}
+.entrance-content h1{margin-bottom:1.5rem}
+.entrance-content h1 .word{display:inline-block;opacity:0;transform:translateY(50px);animation:wordUp .7s var(--ease) forwards}
+@keyframes wordUp{to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{to{opacity:1}}
+.entrance-sub{font-size:clamp(1rem,2vw,1.25rem);color:var(--txt-d);max-width:550px;margin:0 auto 3rem;
+  opacity:0;animation:fadeIn 1s 1.8s var(--ease) forwards}
+.entrance-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:fadeIn .8s 2.2s var(--ease) forwards}
+.scroll-hint{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:6;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:0;animation:fadeIn 1s 3s var(--ease) forwards}
+.scroll-hint span{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--txt-d)}
+.scroll-arrow{width:24px;height:24px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);
+  transform:rotate(45deg);animation:bounce 2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(8px)}}
+
+/* ============================================= */
+/*   SCENE 2 — BLENDY OPENS THE DOOR            */
+/* ============================================= */
+#welcome{background:var(--bg)}
+.welcome-split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;min-height:80vh}
+.welcome-text h2{margin-bottom:1.5rem}
+.welcome-text p{margin-bottom:1.5rem;color:var(--txt-d);font-size:1.05rem}
+.welcome-text .highlight{color:var(--gold);font-weight:600}
+.welcome-blendy{display:flex;justify-content:center}
+.welcome-blendy img{width:clamp(250px,85%,400px);border-radius:24px}
+
+/* ============================================= */
+/*   SCENE 3 — THE BAR (PROBLEM)                */
+/* ============================================= */
+#problem{min-height:100vh}
+#problem .scene-bg{background-image:url('assets/bg-bar.png');opacity:.3}
+.problem-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center}
+.pain{display:flex;gap:1.2rem;align-items:flex-start;margin-bottom:1.8rem}
+.pain-icon{flex-shrink:0;width:52px;height:52px;background:var(--gold-dim);border:1px solid rgba(232,168,56,.2);
+  border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.pain h3{margin-bottom:.25rem}
+.pain p{font-size:.9rem;color:var(--txt-d)}
+.problem-visual{display:flex;justify-content:center}
+.problem-visual img{width:100%;max-width:450px;border-radius:20px;border:1px solid var(--glass-b)}
+
+/* ============================================= */
+/*   SCENE 4 — HOW IT WORKS (JOURNEY)           */
+/* ============================================= */
+#journey{background:var(--bg2)}
+.journey-header{text-align:center;margin-bottom:4rem}
+.journey-header p{color:var(--txt-d);max-width:500px;margin:.75rem auto 0}
+.journey-steps{display:flex;gap:0;position:relative}
+.journey-step{flex:1;padding:2rem;position:relative;text-align:center}
+.journey-step::after{content:'';position:absolute;top:50%;right:0;width:60px;height:2px;
+  background:linear-gradient(to right,var(--gold),transparent);opacity:.3}
+.journey-step:last-child::after{display:none}
+.step-img{width:100%;max-width:280px;margin:0 auto 1.5rem;border-radius:16px;
+  border:1px solid var(--glass-b);overflow:hidden}
+.step-img img{width:100%;display:block}
+.step-num{font-family:var(--ff-m);font-size:3.5rem;font-weight:700;color:var(--gold);opacity:.2;margin-bottom:.5rem}
+.journey-step h3{margin-bottom:.5rem}
+.journey-step p{font-size:.88rem;color:var(--txt-d);max-width:280px;margin:0 auto}
+
+/* ============================================= */
+/*   SCENE 5 — PROFILING (BLENDY LISTENS)       */
+/* ============================================= */
+#profiling{min-height:100vh}
+#profiling .scene-bg{background-image:url('assets/bg-bar.png');opacity:.15}
+.profiling-split{display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:center}
+.profiling-visual{display:flex;justify-content:center}
+.profiling-visual img{width:100%;max-width:500px}
+.dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.dim{padding:1rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start}
+.dim-ico{font-size:1.3rem;flex-shrink:0;margin-top:.1rem}
+.dim-name{font-weight:600;font-size:.9rem;color:var(--txt)}
+.dim-desc{font-size:.78rem;color:var(--txt-d)}
+
+/* ============================================= */
+/*   SCENE 6 — MATCHING (THE TABLE)             */
+/* ============================================= */
+#matching{min-height:100vh}
+#matching .scene-bg{background-image:url('assets/bg-table-close.png');opacity:.25}
+.matching-center{text-align:center}
+.matching-center>p{color:var(--txt-d);max-width:550px;margin:.75rem auto 3rem}
+.match-showcase{margin:0 auto 3rem}
+.match-showcase img{width:100%;max-width:700px;border-radius:20px;border:1px solid var(--glass-b);margin:0 auto;display:block}
+.match-score-big{display:flex;align-items:center;justify-content:center;gap:2rem;margin:2.5rem 0}
+.match-num{font-family:var(--ff-m);font-size:clamp(3rem,8vw,5rem);font-weight:700;color:var(--gold);line-height:1}
+.match-label{text-align:left}
+.match-label span{display:block;font-size:.75rem;color:var(--txt-d);text-transform:uppercase;letter-spacing:.15em}
+.match-label em{font-family:var(--ff-d);font-style:italic;font-size:1.1rem;color:var(--gold-l)}
+.match-quote{font-family:var(--ff-d);font-style:italic;font-size:clamp(1.1rem,2.5vw,1.6rem);
+  color:var(--gold-l);max-width:650px;margin:0 auto;line-height:1.4}
+
+/* ============================================= */
+/*   SCENE 7 — TABLE COMPOSITION                */
+/* ============================================= */
+#tables{background:var(--bg2)}
+.tables-split{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center}
+.tables-visual img{width:100%;border-radius:20px;border:1px solid var(--glass-b)}
+.tables-text h2{margin-bottom:1rem}
+.tables-text p{color:var(--txt-d);margin-bottom:2rem;font-size:1.05rem}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat-item{padding:1.2rem;text-align:center}
+.stat-val{font-family:var(--ff-m);font-size:2rem;font-weight:700;color:var(--gold);line-height:1}
+.stat-lbl{font-size:.78rem;color:var(--txt-d);margin-top:.3rem}
+
+/* ============================================= */
+/*   SCENE 8 — BLENDY EUREKA + STATS            */
+/* ============================================= */
+#results{min-height:90vh;display:flex;align-items:center}
+#results .scene-bg{background-image:url('assets/bg-tables.png');opacity:.18}
+.results-center{text-align:center}
+.results-blendy{margin-bottom:2rem}
+.results-blendy img{width:clamp(180px,25vw,280px)}
+.results-center h2{margin-bottom:1rem}
+.results-center>p{color:var(--txt-d);max-width:500px;margin:0 auto 3rem}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;max-width:800px;margin:0 auto}
+.stat-card{padding:1.5rem 1rem;text-align:center}
+.stat-card .num{font-family:var(--ff-m);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--gold);line-height:1}
+.stat-card .lbl{font-size:.8rem;color:var(--txt-d);margin-top:.4rem}
+
+/* ============================================= */
+/*   SCENE 9 — CTA (GOLDEN GLOW)                */
+/* ============================================= */
+#cta{min-height:80vh;display:flex;align-items:center}
+#cta .scene-bg{background-image:url('assets/bg-golden.png');opacity:.6}
+#cta .scene-overlay{background:radial-gradient(ellipse at center,transparent 20%,rgba(10,10,15,.4) 100%)}
+.cta-center{text-align:center}
+.cta-blendy{margin-bottom:2rem}
+.cta-blendy img{width:clamp(160px,22vw,260px)}
+.cta-center h2{color:var(--bg);margin-bottom:.75rem;text-shadow:0 2px 20px rgba(0,0,0,.2)}
+.cta-center .cta-sub{font-size:1.15rem;color:rgba(10,10,15,.65);margin-bottom:2.5rem;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--glass-b);padding:2.5rem 1.5rem;text-align:center}
+footer p{font-size:.8rem;color:var(--txt-d)}
+footer a{color:var(--gold);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.badges{display:flex;gap:.75rem;justify-content:center;margin-top:.75rem;flex-wrap:wrap}
+.badge{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  padding:.3rem .7rem;border-radius:20px;border:1px solid var(--glass-b);color:var(--txt-d)}
+
+/* ====== RESPONSIVE ====== */
+@media(max-width:900px){
+  .welcome-split,.problem-inner,.profiling-split,.tables-split{grid-template-columns:1fr;gap:2rem}
+  .journey-steps{flex-direction:column}
+  .journey-step::after{display:none}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .dim-grid{grid-template-columns:1fr}
+  .welcome-blendy{order:-1}
+  .profiling-visual{order:-1}
+}
+@media(max-width:600px){
+  .entrance-content{padding-top:20vh}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-row{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.15s!important}
+  .r,.r-s,.r-l,.r-r{opacity:1;transform:none}
+  .entrance-content h1 .word{opacity:1;transform:none}
+  .smoke-layer,.bokeh-layer{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ATMOSPHERIC OVERLAYS -->
+<div class="smoke-layer" aria-hidden="true"></div>
+<div class="bokeh-layer" aria-hidden="true"></div>
+
+<!-- ================================================================ -->
+<!--  SCENE 1 — THE ENTRANCE                                          -->
+<!-- ================================================================ -->
+<section id="entrance" class="scene">
+  <div class="scene-bg"></div>
+  <div class="scene-overlay"></div>
+  <div class="scene-content entrance-content">
+    <div class="pre-title">BlendIn Lounge</div>
+    <h1 id="hero-h1"></h1>
+    <p class="entrance-sub">L'AI che profila i partecipanti ai tuoi eventi di networking e compone tavoli dove ogni connessione conta.</p>
+    <div class="entrance-ctas">
+      <a href="#welcome" class="btn btn-gold">Entra nel lounge</a>
+      <a href="#cta" class="btn btn-ghost">Richiedi una demo</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scorri</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  SCENE 2 — BLENDY WELCOMES YOU                                   -->
+<!-- ================================================================ -->
+<section id="welcome" class="scene">
+  <div class="scene-content">
+    <div class="welcome-split">
+      <div class="welcome-text">
+        <h2 class="r">Ciao, sono <span class="accent">Blendy.</span></h2>
+        <p class="r" data-delay="1">Sono il tuo host per questa sera. Il mio lavoro? <span class="highlight">Conoscerti in 5 minuti</span> e assicurarmi che tu sia seduto accanto alle persone giuste.</p>
+        <p class="r" data-delay="2">Non un form. Non un questionario. Una chiacchierata su WhatsApp — <span class="highlight">anche con i vocali.</span></p>
+        <p class="r" data-delay="3" style="color:var(--txt-d);font-style:italic;font-size:.95rem">"Fidati, voi due dovete parlare."</p>
+      </div>
+      <div class="welcome-blendy r-r" data-delay="1">
+        <img src="assets/blendy-welcome.png" alt="Blendy ti accoglie" class="blendy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  SCENE 3 — THE PROBLEM (AT THE BAR)                              -->
+<!-- ================================================================ -->
+<section id="problem" class="scene">
+  <div class="scene-bg"></div>
+  <div class="scene-overlay" style="background:linear-gradient(to bottom,var(--bg) 0%,transparent 20%,transparent 80%,var(--bg) 100%)"></div>
+  <div class="scene-content">
+    <div class="problem-inner">
+      <div>
+        <h2 class="r">Tavoli casuali,<br><span class="accent">connessioni perse.</span></h2>
+        <p class="r" data-delay="1" style="color:var(--txt-d);margin-bottom:2.5rem;font-size:1.05rem">Ogni evento di networking ha lo stesso difetto strutturale.</p>
+        <div class="pain r" data-delay="2">
+          <div class="pain-icon">🪑</div>
+          <div><h3>Tre esperti marketing, zero valore</h3><p>Senza dati, chi offre le stesse cose finisce insieme. Nessuno può aiutare l'altro.</p></div>
+        </div>
+        <div class="pain r" data-delay="3">
+          <div class="pain-icon">📋</div>
+          <div><h3>L'85% ignora il form</h3><p>Completamento tra il 15 e il 30%. Troppo poco per qualsiasi logica di matching.</p></div>
+        </div>
+        <div class="pain r" data-delay="4">
+          <div class="pain-icon">👻</div>
+          <div><h3>Follow-up fantasma</h3><p>Le connessioni di valore sono affidate alla buona volontà. Nessun sistema le facilita.</p></div>
+        </div>
+      </div>
+      <div class="problem-visual r-r" data-delay="2">
+        <img src="assets/blendy-listen.png" alt="Blendy ascolta al bancone" class="blendy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  SCENE 4 — THE JOURNEY (HOW IT WORKS)                            -->
+<!-- ================================================================ -->
+<section id="journey">
+  <div class="scene-content">
+    <div class="journey-header">
+      <h2 class="r">Il barista che <span class="accent">conosce tutti.</span></h2>
+      <p class="r" data-delay="1">Tre passi. Cinque minuti. Zero form.</p>
+    </div>
+    <div class="journey-steps">
+      <div class="journey-step r-s" data-delay="1">
+        <div class="step-img glass"><img src="assets/phone-chat.png" alt="Chat WhatsApp con Blendy"></div>
+        <div class="step-num">01</div>
+        <h3>Chiacchiera su WhatsApp</h3>
+        <p>Un link, una conversazione. Testo o vocali, come preferisci.</p>
+      </div>
+      <div class="journey-step r-s" data-delay="3">
+        <div class="step-img glass"><img src="assets/radar-chart.png" alt="Profilo a 7 dimensioni"></div>
+        <div class="step-num">02</div>
+        <h3>Blendy capisce chi sei</h3>
+        <p>7 dimensioni estratte in modo naturale. Settore, competenze, obiettivi, offre, cerca.</p>
+      </div>
+      <div class="journey-step r-s" data-delay="5">
+        <div class="step-img glass"><img src="assets/table-cards.png" alt="Composizione tavoli"></div>
+        <div class="step-num">03</div>
+        <h3>I tavoli si compongono</h3>
+        <p>L'algoritmo crea tavoli dove ognuno può dare e ricevere qualcosa di concreto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  SCENE 5 — PROFILING (BLENDY WRITES)                             -->
+<!-- ================================================================ -->
+<section id="profiling" class="scene">
+  <div class="scene-bg"></div>
+  <div class="scene-overlay" style="background:linear-gradient(to bottom,var(--bg2) 0%,transparent 15%,transparent 85%,var(--bg) 100%)"></div>
+  <div class="scene-content">
+    <div class="profiling-split">
+      <div class="profiling-visual r-l">
+        <img src="assets/blendy-profile.png" alt="Blendy prende appunti" class="blendy">
+      </div>
+      <div>
+        <h2 class="r">Il tuo profilo,<br><span class="accent">al bancone.</span></h2>
+        <p class="r" data-delay="1" style="color:var(--txt-d);font-size:1.05rem">Non un form. Una conversazione. 7 dimensioni estratte naturalmente.</p>
+        <div class="dim-grid">
+          <div class="dim glass r" data-delay="1"><div class="dim-ico">🏢</div><div><div class="dim-name">Settore</div><div class="dim-desc">Diversità cross-settore crea valore</div></div></div>
+          <div class="dim glass r" data-delay="2"><div class="dim-ico">🚀</div><div><div class="dim-name">Fase business</div><div class="dim-desc">Idea, startup, scale, maturo</div></div></div>
+          <div class="dim glass r" data-delay="3"><div class="dim-ico">⚡</div><div><div class="dim-name">Competenze</div><div class="dim-desc">Cosa sai fare bene</div></div></div>
+          <div class="dim glass r" data-delay="4"><div class="dim-ico">🎯</div><div><div class="dim-name">Obiettivi 90gg</div><div class="dim-desc">Bisogni concreti e immediati</div></div></div>
+          <div class="dim glass r" data-delay="5"><div class="dim-ico">🤝</div><div><div class="dim-name">Cosa offri</div><div class="dim-desc">Mentoring, intro, expertise</div></div></div>
+          <div class="dim glass r" data-delay="6"><div class="dim-ico">🔍</div><div><div class="dim-name">Cosa cerchi</div><div class="dim-desc">Partner, feedback, clienti</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  SCENE 6 — MATCHING (THE TABLE, CLOSE UP)                        -->
+<!-- ================================================================ -->
+<section id="matching" class="scene">
+  <div class="scene-bg"></div>
+  <div class="scene-overlay" style="background:linear-gradient(to bottom,var(--bg) 0%,transparent 20%,transparent 80%,var(--bg2) 100%)"></div>
+  <div class="scene-content matching-center">
+    <h2 class="r">Complementarità,<br><span class="accent">non somiglianza.</span></h2>
+    <p class="r" data-delay="1">Non cerchiamo persone uguali a te. Cerchiamo chi ha quello che ti manca.</p>
+    <div class="match-showcase r-s" data-delay="2">
+      <img src="assets/match-visual.png" alt="Due profili che si connettono">
+    </div>
+    <div class="match-score-big r" data-delay="3">
+      <div class="match-num" data-target="87">0</div>
+      <div class="match-label">
+        <span>Match score</span>
+        <em>Complementarità perfetta</em>
+      </div>
+    </div>
+    <div class="match-quote r" data-delay="4">
+      <p>"Se tu offri quello che lei cerca, e lei offre quello che tu cerchi — <span class="accent">stesso tavolo.</span>"</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  SCENE 7 — TABLE COMPOSITION                                     -->
+<!-- ================================================================ -->
+<section id="tables">
+  <div class="scene-content">
+    <div class="tables-split">
+      <div class="tables-visual r-l">
+        <img src="assets/blendy-matching.png" alt="Blendy compone i tavoli" class="blendy">
+      </div>
+      <div>
+        <h2 class="r">Ogni tavolo,<br><span class="accent">una storia.</span></h2>
+        <p class="r" data-delay="1">Blendy analizza tutti i profili e compone i tavoli massimizzando le connessioni utili. Nessun tavolo casuale.</p>
+        <div class="stat-row">
+          <div class="stat-item glass r" data-delay="2">
+            <div class="stat-val" data-target="6">0</div>
+            <div class="stat-lbl">Persone per tavolo</div>
+          </div>
+          <div class="stat-item glass r" data-delay="3">
+            <div class="stat-val" data-target="5" data-suffix="s">0</div>
+            <div class="stat-lbl">Tempo di calcolo</div>
+          </div>
+          <div class="stat-item glass r" data-delay="4">
+            <div class="stat-val" data-target="200" data-suffix="+">0</div>
+            <div class="stat-lbl">Partecipanti gestiti</div>
+          </div>
+          <div class="stat-item glass r" data-delay="5">
+            <div class="stat-val" data-target="0" data-suffix="%" data-prefix="<20">—</div>
+            <div class="stat-lbl">Tavoli "deboli"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  SCENE 8 — RESULTS (BLENDY EUREKA)                               -->
+<!-- ================================================================ -->
+<section id="results" class="scene">
+  <div class="scene-bg"></div>
+  <div class="scene-overlay" style="background:linear-gradient(to bottom,var(--bg2) 0%,transparent 20%,transparent 80%,var(--bg) 100%)"></div>
+  <div class="scene-content results-center">
+    <div class="results-blendy r-s">
+      <img src="assets/blendy-eureka.png" alt="Blendy celebra" class="blendy">
+    </div>
+    <h2 class="r">I numeri del <span class="accent">lounge.</span></h2>
+    <p class="r" data-delay="1">Ogni dettaglio è progettato per funzionare.</p>
+    <div class="stats-grid">
+      <div class="stat-card glass r-s" data-delay="1">
+        <div class="num" data-target="80" data-suffix="%">0</div>
+        <div class="lbl">Completion rate<br><small style="opacity:.4">vs 15-30% form</small></div>
+      </div>
+      <div class="stat-card glass r-s" data-delay="2">
+        <div class="num" data-target="5" data-suffix=" min">0</div>
+        <div class="lbl">Tempo intervista</div>
+      </div>
+      <div class="stat-card glass r-s" data-delay="3">
+        <div class="num" data-target="10" data-prefix="€0." data-suffix="">0</div>
+        <div class="lbl">Per partecipante</div>
+      </div>
+      <div class="stat-card glass r-s" data-delay="4">
+        <div class="num" data-target="3" data-suffix="s">0</div>
+        <div class="lbl">Latenza risposta AI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!--  SCENE 9 — CTA (GOLDEN MOMENT)                                   -->
+<!-- ================================================================ -->
+<section id="cta" class="scene">
+  <div class="scene-bg"></div>
+  <div class="scene-overlay"></div>
+  <div class="scene-content cta-center">
+    <div class="cta-blendy r-s">
+      <img src="assets/blendy-cta.png" alt="Blendy ti indica" class="blendy">
+    </div>
+    <h2 class="r">Il tuo prossimo evento<br>inizia <span style="color:var(--bg)">qui.</span></h2>
+    <p class="cta-sub r" data-delay="1">Ogni tavolo merita una storia. Iniziamo a scriverla.</p>
+    <div class="cta-actions r" data-delay="2">
+      <a href="mailto:blendin@piirz.com" class="btn btn-dark">Richiedi una demo</a>
+      <a href="#" class="btn btn-ghost" style="color:var(--bg);border-color:rgba(10,10,15,.3)">Scarica il lightpaper</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>BlendIn</strong> by <a href="https://piirz.com">PiirZ Digital</a> · <a href="/privacy">Privacy</a> · blendin@piirz.com</p>
+  <div class="badges">
+    <span class="badge">🔒 GDPR by design</span>
+    <span class="badge">🇮🇹 Made in Italy</span>
+    <span class="badge">🤖 Powered by PiirZ Prompt Router</span>
+  </div>
+</footer>
+
+<script>
+/* ====== HERO HEADLINE — WORD BY WORD ====== */
+!function(){
+  const h=document.getElementById('hero-h1');
+  const lines=[
+    {words:'Ogni tavolo ha',br:false},
+    {words:'una storia.',br:true},
+    {words:'Noi la scriviamo',br:false},
+    {words:'prima.',br:false}
+  ];
+  let i=0;
+  lines.forEach(line=>{
+    if(line.br){const br=document.createElement('br');h.appendChild(br)}
+    line.words.split(' ').forEach(w=>{
+      const s=document.createElement('span');
+      s.className='word';
+      s.style.animationDelay=(0.6+i*0.12)+'s';
+      s.textContent=w+'\u00A0';
+      h.appendChild(s);
+      i++;
+    });
+  });
+}();
+
+/* ====== INTERSECTION OBSERVER — REVEALS ====== */
+!function(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')});
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.r,.r-s,.r-l,.r-r').forEach(el=>obs.observe(el));
+}();
+
+/* ====== COUNTER ANIMATION ====== */
+!function(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting||e.target.dataset.counted)return;
+      e.target.dataset.counted='1';
+      const t=parseInt(e.target.dataset.target);
+      if(isNaN(t)){e.target.textContent=e.target.dataset.prefix||'';return}
+      const pre=e.target.dataset.prefix||'';
+      const suf=e.target.dataset.suffix||'';
+      const dur=1100;const st=performance.now();
+      !function tick(now){
+        const p=Math.min((now-st)/dur,1);
+        const eased=1-Math.pow(1-p,3);
+        e.target.textContent=pre+Math.round(eased*t)+suf;
+        if(p<1)requestAnimationFrame(tick);
+      }(st);
+    });
+  },{threshold:.3});
+  document.querySelectorAll('[data-target]').forEach(c=>obs.observe(c));
+}();
+
+/* ====== PARALLAX ON SCENE BACKGROUNDS ====== */
+!function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  if(window.innerWidth<768)return;
+  const bgs=document.querySelectorAll('.scene-bg');
+  let ticking=false;
+  window.addEventListener('scroll',()=>{
+    if(!ticking){requestAnimationFrame(()=>{
+      const sy=window.scrollY;
+      bgs.forEach(bg=>{
+        const rect=bg.parentElement.getBoundingClientRect();
+        const offset=(rect.top+rect.height/2-window.innerHeight/2)*0.08;
+        bg.style.transform='translateY('+offset+'px) scale(1.08)';
+      });
+      ticking=false;
+    });ticking=true;}
+  });
+}();
+</script>
+</body>
+</html>
