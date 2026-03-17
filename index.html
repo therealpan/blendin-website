@@ -346,8 +346,8 @@ footer a:hover{text-decoration:underline}
 
 <script>
 !function(){var h=document.getElementById('h1'),i=0;
-['Ogni tavolo ha','una storia.','Noi la scriviamo','prima.'].forEach(function(l,li){
-if(li===1||li===3)h.appendChild(document.createElement('br'));
+['Ogni tavolo ha una storia.','Noi la scriviamo prima.'].forEach(function(l,li){
+if(li===1)h.appendChild(document.createElement('br'));
 l.split(' ').forEach(function(w){var s=document.createElement('span');s.className='w';s.style.animationDelay=(.5+i*.11)+'s';s.textContent=w+'\u00A0';h.appendChild(s);i++})})}();
 
 !function(){var o=new IntersectionObserver(function(e){e.forEach(function(e){if(!e.isIntersecting)return;var t=e.target;
