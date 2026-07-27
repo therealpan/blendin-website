@@ -298,6 +298,7 @@ footer a:hover{text-decoration:underline}
 <div class="dm gl" data-r="u" style="transition-delay:.3s"><div class="di">🎯</div><div><div class="dn" data-i="d4_n"></div><div class="dd" data-i="d4_d"></div></div></div>
 <div class="dm gl" data-r="u" style="transition-delay:.36s"><div class="di">🤝</div><div><div class="dn" data-i="d5_n"></div><div class="dd" data-i="d5_d"></div></div></div>
 <div class="dm gl" data-r="u" style="transition-delay:.42s"><div class="di">🔍</div><div><div class="dn" data-i="d6_n"></div><div class="dd" data-i="d6_d"></div></div></div>
+<div class="dm gl" data-r="u" style="transition-delay:.48s;grid-column:1/-1"><div class="di">🔗</div><div><div class="dn" data-i="d7_n"></div><div class="dd" data-i="d7_d"></div></div></div>
 </div>
 </div>
 </div></div>
@@ -371,7 +372,7 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <footer>
-<p><strong>BlendIn</strong> by <a href="https://piirz.com">PiirZ Digital</a> · <a href="/privacy">Privacy</a> · blendin@piirz.com</p>
+<p><strong>BlendIn</strong> by <a href="https://piirz.com">PiirZ Digital</a> · <a id="footPrivacy" href="privacy.html">Privacy</a> · <a id="footCookie" href="cookie.html">Cookie</a> · <a id="footTerms" href="terms.html">Termini</a> · <a href="mailto:blendin@piirz.com">blendin@piirz.com</a></p>
 <div class="badges"><span class="badge">🔒 GDPR by design</span><span class="badge">🤖 PiirZ Prompt Router</span></div>
 </footer>
 
@@ -397,7 +398,7 @@ it:{
   s5_title:'Il tuo profilo,<br><span class="ac">al bancone.</span>',s5_sub:"Non un form. Una conversazione. Blendy scopre chi sei davvero.",
   d1_n:"Cosa fai",d1_d:"Il tuo mondo professionale",d2_n:"A che punto sei",d2_d:"La fase del tuo percorso",
   d3_n:"In cosa sei forte",d3_d:"Le tue competenze distintive",d4_n:"Dove stai andando",d4_d:"I tuoi obiettivi a breve",
-  d5_n:"Cosa puoi dare",d5_d:"Il valore che porti al tavolo",d6_n:"Cosa ti serve",d6_d:"Quello che stai cercando",
+  d5_n:"Cosa puoi dare",d5_d:"Il valore che porti al tavolo",d6_n:"Cosa ti serve",d6_d:"Quello che stai cercando",d7_n:"Come ti relazioni",d7_d:"Il tuo stile di connessione",
   s6_title:'Complementarità,<br><span class="ac">non somiglianza.</span>',s6_sub:"Non cerchiamo persone uguali a te. Cerchiamo chi ha quello che ti manca.",
   s6_score:"Match score",s6_score_sub:"Complementarità perfetta",
   s6_quote:'"Se tu offri quello che lei cerca, e lei offre quello che tu cerchi — <span class="ac">stesso tavolo.</span>"',
@@ -428,7 +429,7 @@ en:{
   s5_title:'Your profile,<br><span class="ac">at the bar.</span>',s5_sub:"Not a form. A conversation. Blendy discovers who you really are.",
   d1_n:"What you do",d1_d:"Your professional world",d2_n:"Where you are",d2_d:"Your current stage",
   d3_n:"What you're great at",d3_d:"Your distinctive skills",d4_n:"Where you're heading",d4_d:"Your short-term goals",
-  d5_n:"What you can give",d5_d:"The value you bring to the table",d6_n:"What you need",d6_d:"What you're looking for",
+  d5_n:"What you can give",d5_d:"The value you bring to the table",d6_n:"What you need",d6_d:"What you're looking for",d7_n:"How you connect",d7_d:"Your relational style",
   s6_title:'Complementarity,<br><span class="ac">not similarity.</span>',s6_sub:"We don't look for people like you. We look for people who have what you lack.",
   s6_score:"Match score",s6_score_sub:"Perfect complementarity",
   s6_quote:'"If you offer what she needs, and she offers what you need — <span class="ac">same table.</span>"',
@@ -459,7 +460,7 @@ fr:{
   s5_title:'Votre profil,<br><span class="ac">au comptoir.</span>',s5_sub:"Pas un formulaire. Une conversation. Blendy découvre qui vous êtes vraiment.",
   d1_n:"Ce que vous faites",d1_d:"Votre univers professionnel",d2_n:"Où vous en êtes",d2_d:"L'étape de votre parcours",
   d3_n:"Vos points forts",d3_d:"Vos compétences distinctives",d4_n:"Où vous allez",d4_d:"Vos objectifs à court terme",
-  d5_n:"Ce que vous apportez",d5_d:"La valeur que vous amenez",d6_n:"Ce qu'il vous faut",d6_d:"Ce que vous cherchez",
+  d5_n:"Ce que vous apportez",d5_d:"La valeur que vous amenez",d6_n:"Ce qu'il vous faut",d6_d:"Ce que vous cherchez",d7_n:"Comment vous créez du lien",d7_d:"Votre style relationnel",
   s6_title:'Complémentarité,<br><span class="ac">pas similitude.</span>',s6_sub:"On ne cherche pas des gens comme vous. On cherche ceux qui ont ce qui vous manque.",
   s6_score:"Score de match",s6_score_sub:"Complémentarité parfaite",
   s6_quote:'"Si vous offrez ce qu\'elle cherche, et elle offre ce que vous cherchez — <span class="ac">même table.</span>"',
@@ -490,7 +491,7 @@ de:{
   s5_title:'Ihr Profil,<br><span class="ac">an der Bar.</span>',s5_sub:"Kein Formular. Ein Gespräch. Blendy entdeckt, wer Sie wirklich sind.",
   d1_n:"Was Sie tun",d1_d:"Ihre berufliche Welt",d2_n:"Wo Sie stehen",d2_d:"Ihre aktuelle Phase",
   d3_n:"Worin Sie stark sind",d3_d:"Ihre besonderen Fähigkeiten",d4_n:"Wohin Sie gehen",d4_d:"Ihre kurzfristigen Ziele",
-  d5_n:"Was Sie geben können",d5_d:"Der Wert, den Sie mitbringen",d6_n:"Was Sie brauchen",d6_d:"Was Sie suchen",
+  d5_n:"Was Sie geben können",d5_d:"Der Wert, den Sie mitbringen",d6_n:"Was Sie brauchen",d6_d:"Was Sie suchen",d7_n:"Wie Sie sich vernetzen",d7_d:"Ihr Beziehungsstil",
   s6_title:'Komplementarität,<br><span class="ac">nicht Ähnlichkeit.</span>',s6_sub:"Wir suchen nicht Menschen wie Sie. Wir suchen die, die haben, was Ihnen fehlt.",
   s6_score:"Match-Score",s6_score_sub:"Perfekte Komplementarität",
   s6_quote:'"Wenn Sie anbieten, was sie sucht, und sie anbietet, was Sie suchen — <span class="ac">selber Tisch.</span>"',
@@ -521,7 +522,7 @@ es:{
   s5_title:'Tu perfil,<br><span class="ac">en la barra.</span>',s5_sub:"No es un formulario. Es una conversación. Blendy descubre quién eres realmente.",
   d1_n:"Qué haces",d1_d:"Tu mundo profesional",d2_n:"Dónde estás",d2_d:"Tu etapa actual",
   d3_n:"En qué eres fuerte",d3_d:"Tus habilidades distintivas",d4_n:"Hacia dónde vas",d4_d:"Tus objetivos a corto plazo",
-  d5_n:"Qué puedes dar",d5_d:"El valor que aportas a la mesa",d6_n:"Qué necesitas",d6_d:"Lo que estás buscando",
+  d5_n:"Qué puedes dar",d5_d:"El valor que aportas a la mesa",d6_n:"Qué necesitas",d6_d:"Lo que estás buscando",d7_n:"Cómo te relacionas",d7_d:"Tu estilo relacional",
   s6_title:'Complementariedad,<br><span class="ac">no similitud.</span>',s6_sub:"No buscamos personas como tú. Buscamos a quienes tienen lo que te falta.",
   s6_score:"Puntuación de match",s6_score_sub:"Complementariedad perfecta",
   s6_quote:'"Si tú ofreces lo que ella busca, y ella ofrece lo que tú buscas — <span class="ac">misma mesa.</span>"',
@@ -565,6 +566,11 @@ function setLang(lang){
   document.querySelectorAll('.lang-sw button').forEach(function(b){
     b.classList.toggle('active',b.getAttribute('data-lang')===lang);
   });
+  /* Localise footer legal links (label + language-specific page) */
+  var suf=(lang==='it')?'':'-'+lang;
+  var lbl=({it:['Privacy','Cookie','Termini'],en:['Privacy','Cookie','Terms'],fr:['Confidentialité','Cookies','Conditions'],de:['Datenschutz','Cookies','Bedingungen'],es:['Privacidad','Cookies','Términos']})[lang]||['Privacy','Cookie','Terms'];
+  var fl=[['footPrivacy','privacy'],['footCookie','cookie'],['footTerms','terms']];
+  fl.forEach(function(pair,idx){var el=document.getElementById(pair[0]);if(el){el.href=pair[1]+suf+'.html';el.textContent=lbl[idx];}});
 }
 
 function buildHeadline(lang){
