@@ -1,2 +1,7 @@
+# BlendIn · PIIRZ Digital Limited
+# Search engines and AI assistants are welcome to crawl and cite this site.
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://blendin.piirz.eu/sitemap.xml
+# AI-readable overview: https://blendin.piirz.eu/llms.txt

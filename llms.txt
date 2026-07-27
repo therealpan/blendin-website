@@ -1,0 +1,26 @@
+# BlendIn
+
+> BlendIn is an AI facilitator that turns networking events from random encounters into designed connections. Its conversational assistant "Blendy" interviews each participant in 5–8 minutes — via WhatsApp, web chat or phone — builds a structured 7-dimension profile, and composes event tables by complementarity, seating people who offer what others are looking for.
+
+BlendIn is a product of PIIRZ Digital Limited (Malta). It is privacy-first ("GDPR by design"): explicit consent, automatic data deletion, and proprietary in-house matching and routing. The interview and interface are available in Italian, English and French.
+
+## How it works
+- **Conversational profiling:** Blendy interviews each participant in 5–8 minutes, no forms, by text or voice.
+- **7 profile dimensions:** sector, business stage, skills, short-term goals (90 days), what you can offer, what you are looking for, and relational style.
+- **Complementarity matching:** people are matched by what they complement in each other, not by similarity — those who offer what another is seeking sit at the same table.
+- **Automatic table composition:** each table gets a quality score; the organiser can review and adjust it.
+- **Organiser dashboard:** real-time session monitoring, table composition and matching analytics.
+
+## Plans
+- Free, Connect and Pro tiers, plus a White Label option for organisers. Details and pricing are shown on the site.
+
+## Key pages
+- [Homepage](https://blendin.piirz.eu/): product overview and how it works
+- [Privacy Policy](https://blendin.piirz.eu/privacy.html) — English: https://blendin.piirz.eu/privacy-en.html
+- [Cookie Policy](https://blendin.piirz.eu/cookie.html) — English: https://blendin.piirz.eu/cookie-en.html
+- [Terms of Service](https://blendin.piirz.eu/terms.html) — English: https://blendin.piirz.eu/terms-en.html
+
+## Contact
+- General: hello@piirz.com
+- BlendIn and privacy requests: blendin@piirz.com
+- Company: PIIRZ Digital Limited, Malta — https://piirz.com
