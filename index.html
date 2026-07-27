@@ -373,7 +373,7 @@ footer a:hover{text-decoration:underline}
 
 <footer>
 <p><strong>BlendIn</strong> by <a href="https://piirz.com">PiirZ Digital</a> · <a id="footPrivacy" href="privacy.html">Privacy</a> · <a id="footCookie" href="cookie.html">Cookie</a> · <a id="footTerms" href="terms.html">Termini</a> · <a href="mailto:blendin@piirz.com">blendin@piirz.com</a></p>
-<div class="badges"><span class="badge">🔒 GDPR by design</span><span class="badge">🤖 PiirZ Prompt Router</span></div>
+<div class="badges"><span class="badge" id="footGdpr">🔒 GDPR by design</span><span class="badge">🤖 PiirZ Prompt Router</span></div>
 </footer>
 
 <script>
@@ -571,6 +571,8 @@ function setLang(lang){
   var lbl=({it:['Privacy','Cookie','Termini'],en:['Privacy','Cookie','Terms'],fr:['Confidentialité','Cookies','Conditions'],de:['Datenschutz','Cookies','Bedingungen'],es:['Privacidad','Cookies','Términos']})[lang]||['Privacy','Cookie','Terms'];
   var fl=[['footPrivacy','privacy'],['footCookie','cookie'],['footTerms','terms']];
   fl.forEach(function(pair,idx){var el=document.getElementById(pair[0]);if(el){el.href=pair[1]+suf+'.html';el.textContent=lbl[idx];}});
+  var gd=({it:'🔒 GDPR by design',en:'🔒 GDPR by design',fr:'🔒 RGPD dès la conception',de:'🔒 DSGVO by design',es:'🔒 RGPD desde el diseño'})[lang]||'🔒 GDPR by design';
+  var gdEl=document.getElementById('footGdpr');if(gdEl)gdEl.textContent=gd;
 }
 
 function buildHeadline(lang){
