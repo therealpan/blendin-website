@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>BlendIn — Entra nel lounge</title>
+  <meta name="description" content="Scorri e attraversa il lounge di BlendIn: da una sala di tavoli casuali a una sala dove ogni connessione conta." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <link rel="preload" href="assets/v2/entrance.webp" as="image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    html, body { margin: 0; background: #0a0a0f; }
+    :root, .sw-root {
+      --sw-bg: #0a0a0f;
+      --sw-ink: #f0ede6;
+      --sw-ink-soft: rgba(240, 237, 230, .55);
+      --sw-accent: #e8a838;
+      --sw-font-display: 'Playfair Display', Georgia, serif;
+      --sw-font-body: 'DM Sans', system-ui, sans-serif;
+    }
+    /* film grain, same treatment as the v1 site */
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 150px;
+    }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world"></div>
+
+  <script src="assets/v2/scrub-engine.js"></script>
+  <script>
+    mountScrollWorld(document.getElementById('world'), {
+      brand: { name: 'BlendIn', href: '#top' },
+      cta: { label: 'Parliamone', href: 'mailto:blendin@piirz.com' },
+      hint: 'scorri per entrare',
+      diveScroll: 1.4,
+      crossfade: 0.12,   // seams are frame-locked but carry a micro-zoom delta; this hides it
+      sections: [
+        {
+          id: 'entrance', label: 'Il lounge',
+          still: 'assets/v2/entrance.webp', clip: 'assets/v2/vid/entrance.mp4',
+          accent: '#e8a838', scroll: 1.7, linger: 0.35,
+          eyebrow: 'Benvenuto',
+          title: 'La community che conosce davvero i suoi membri.',
+          body: 'BlendIn ti aiuta a farli sedere al tavolo giusto. Ogni volta.',
+          tags: ['WhatsApp', 'Voce', 'Web app'],
+        },
+        {
+          id: 'bar', label: 'Blendy',
+          still: 'assets/v2/bar.webp', clip: 'assets/v2/vid/bar.mp4',
+          accent: '#e8a838', scroll: 1.5, linger: 0.4,
+          eyebrow: 'Il barman che conosce tutti',
+          title: 'Ciao, sono Blendy.',
+          body: 'Sono il tuo host per questa sera. Il mio lavoro? Conoscerti in cinque minuti e assicurarmi che tu sia seduto accanto alle persone giuste.',
+          tags: ['WhatsApp', 'Telefono', 'Web app'],
+        },
+        {
+          id: 'wrongroom', label: 'Il problema',
+          still: 'assets/v2/wrongroom.webp', clip: 'assets/v2/vid/wrongroom.mp4',
+          accent: '#d4654a', scroll: 1.5,
+          eyebrow: 'Il problema',
+          title: 'Tavoli casuali, connessioni perse.',
+          body: 'Tre esperti di marketing allo stesso tavolo, l’85% che ignora il form, follow-up fantasma. Ogni evento di networking ha lo stesso difetto strutturale.',
+          tags: ['15-30% completion', 'Zero dati', 'Match casuale'],
+        },
+        {
+          id: 'interview', label: 'L’intervista',
+          still: 'assets/v2/interview.webp', clip: 'assets/v2/vid/interview.mp4',
+          accent: '#f5d89a', scroll: 1.5, linger: 0.45,
+          eyebrow: 'Cinque minuti al bancone',
+          title: 'Non un form. Una conversazione.',
+          body: 'Testo o voce, come preferisci. Nessun campo obbligatorio, nessuna barra di avanzamento: solo una chiacchierata.',
+          tags: ['~5 minuti', 'Testo o voce', 'Zero form'],
+        },
+        {
+          id: 'dimensions', label: 'Il profilo',
+          still: 'assets/v2/dimensions.webp', clip: 'assets/v2/vid/dimensions.mp4',
+          accent: '#4ecdc4', scroll: 1.6, linger: 0.45,
+          eyebrow: 'Il tuo profilo, al bancone',
+          title: 'Sette dimensioni, zero domande dirette.',
+          body: 'Cosa fai, a che punto sei, in cosa sei forte, dove stai andando, cosa puoi dare, cosa ti serve, come ti relazioni.',
+          tags: ['7 dimensioni', 'Estratte dal parlato'],
+        },
+        {
+          id: 'matching', label: 'Il match',
+          still: 'assets/v2/matching.webp', clip: 'assets/v2/vid/matching.mp4',
+          accent: '#4ecdc4', scroll: 1.5, linger: 0.4,
+          eyebrow: 'Il match',
+          title: 'Complementarità, non somiglianza.',
+          body: 'Non cerchiamo persone uguali a te. Se tu offri quello che lei cerca, e lei offre quello che tu cerchi — stesso tavolo.',
+          tags: ['Match score', 'Give & get'],
+        },
+        {
+          id: 'tables', label: 'La sala',
+          still: 'assets/v2/tables.webp', clip: 'assets/v2/vid/tables.mp4',
+          accent: '#e8a838', scroll: 2.0, linger: 0.5,
+          eyebrow: 'Il risultato',
+          title: 'Ogni tavolo, una storia.',
+          body: 'L’algoritmo compone la sala massimizzando le connessioni utili. Il tuo prossimo evento inizia qui.',
+          tags: ['8 persone per tavolo', '< 30s di calcolo'],
+          cta: {
+            primary: { label: 'Parliamone', href: 'mailto:blendin@piirz.com' },
+            secondary: { label: 'Prova l’intervista', href: 'interview.html' },
+          },
+        },
+      ],
+      connectors: [],   // architecture A: the legs ARE the journey, no fly-over connectors
+    });
+  </script>
+</body>
+</html>
