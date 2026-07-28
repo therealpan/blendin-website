@@ -1,3 +1,9 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# Stato degli strumenti locali: i log degli errori catturano frammenti dei comandi
+# eseguiti, quindi possono contenere credenziali. Questo repo e' pubblico.
+.omc/
+.claude/settings.local.json
+.playwright-mcp/
