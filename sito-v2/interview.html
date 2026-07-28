@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BlendIn Ñ Parla con Blendy</title>
+  <meta name="description" content="Inizia la tua intervista con Blendy, il barista AI di BlendIn.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0a0a0f;--bg2:#12121f;
+      --gold:#e8a838;--gold-l:#f5d89a;--gold-dim:rgba(232,168,56,.12);
+      --coral:#d4654a;--mint:#4ecdc4;
+      --glass:rgba(255,255,255,.05);--gb:rgba(255,255,255,.08);--gh:rgba(255,255,255,.12);
+      --txt:#f0ede6;--td:rgba(240,237,230,.55);--tb:rgba(240,237,230,.8);
+      --fd:'Playfair Display',Georgia,serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
+      --e:cubic-bezier(.25,.46,.45,.94);--sp:cubic-bezier(.34,1.56,.64,1);
+    }
+    html,body{height:100%;overflow:hidden}
+    body{font-family:var(--fb);background:var(--bg);color:var(--tb);line-height:1.6;-webkit-font-smoothing:antialiased}
+    .bg-layer{position:fixed;inset:0;z-index:0}
+    .bg-layer img{width:100%;height:100%;object-fit:cover;opacity:.18}
+    .bg-overlay{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at center,rgba(10,10,15,.5) 0%,rgba(10,10,15,.85) 100%)}
+    .noise{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:150px}
+    .main{position:relative;z-index:3;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+    .phase{display:none;width:100%;max-width:420px;padding:0 1rem;animation:fadeUp .5s var(--e) forwards}
+    .phase.active{display:flex;flex-direction:column;align-items:center}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .card{background:var(--glass);border:1px solid var(--gb);border-radius:24px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:2rem 1.8rem;box-shadow:0 20px 60px rgba(0,0,0,.4);width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
+    .top-bar{position:fixed;top:0;left:0;right:0;z-index:10;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:var(--fd);font-size:1.1rem;color:var(--txt);text-decoration:none;font-weight:700}
+    .logo span{color:var(--gold)}
+    .back{font-size:.78rem;color:var(--td);text-decoration:none;transition:color .2s}
+    .back:hover{color:var(--gold)}
+    .status-bar{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+    .status-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);animation:pulse 2s ease-in-out infinite}
+    .status-text{font-family:var(--fm);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mint)}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .blendy-hero{width:180px;margin:0 auto .8rem;animation:blendyIn .8s var(--sp) forwards}
+    .blendy-hero img{width:100%;height:auto;display:block;filter:drop-shadow(0 12px 30px rgba(0,0,0,.5))}
+    @keyframes blendyIn{from{opacity:0;transform:translateY(30px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+    h1{font-family:var(--fd);color:var(--txt);font-size:1.8rem;font-weight:700;line-height:1.15;margin-bottom:.4rem}
+    h1 .ac{color:var(--gold)}
+    .subtitle{color:var(--td);font-size:.9rem;margin-bottom:1rem;line-height:1.5;max-width:340px}
+    .starters{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;width:100%;margin-bottom:1.2rem}
+    .starter{padding:.7rem .6rem;font-size:.8rem;color:var(--tb);background:var(--glass);border:1px solid var(--gb);border-radius:12px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
+    .starter:hover{border-color:var(--gh);background:rgba(255,255,255,.08);transform:translateY(-1px)}
+    .disclaimer{font-size:.68rem;color:var(--td);margin-bottom:1.2rem}
+    .input-bar{display:flex;align-items:center;gap:.5rem;width:100%;padding:.5rem;background:rgba(255,255,255,.04);border:1.5px solid var(--gb);border-radius:16px;transition:border-color .2s}
+    .input-bar:focus-within{border-color:rgba(232,168,56,.3)}
+    .mode-btn{flex-shrink:0;width:42px;height:42px;border-radius:12px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;background:rgba(255,255,255,.06);color:var(--td)}
+    .mode-btn:hover{background:rgba(255,255,255,.1);color:var(--txt)}
+    .mode-btn.voice-active{background:var(--gold);color:var(--bg)}
+    .mode-btn svg{width:18px;height:18px}
+    .chat-input{flex:1;background:transparent;border:none;color:var(--txt);font-family:var(--fb);font-size:.88rem;outline:none;padding:.4rem .3rem}
+    .chat-input::placeholder{color:var(--td)}
+    .chat-input:disabled{opacity:.5}
+    .send-btn{flex-shrink:0;width:42px;height:42px;border-radius:12px;border:none;background:var(--gold);color:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s,opacity .2s;opacity:.3}
+    .send-btn.enabled{opacity:1}
+    .send-btn.enabled:hover{transform:scale(1.05)}
+    .send-btn svg{width:18px;height:18px}
+    .chat-area{width:100%;flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:.5rem;padding:.5rem 0;scroll-behavior:smooth}
+    .chat-area::-webkit-scrollbar{width:4px}
+    .chat-area::-webkit-scrollbar-thumb{background:var(--gb);border-radius:2px}
+    .msg-bubble{max-width:85%;padding:.6rem .9rem;border-radius:16px;font-size:.85rem;line-height:1.4;word-wrap:break-word}
+    .msg-user{align-self:flex-end;background:var(--gold);color:var(--bg);border-bottom-right-radius:4px}
+    .msg-agent{align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid var(--gb);color:var(--txt);border-bottom-left-radius:4px}
+    .msg-label{display:block;font-size:.6rem;font-family:var(--fm);text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.2rem}
+    .typing-dots{display:flex;gap:.3rem}
+    .typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.5;animation:bounce .6s ease-in-out infinite}
+    .typing-dots span:nth-child(2){animation-delay:.15s}
+    .typing-dots span:nth-child(3){animation-delay:.3s}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+    .voice-orb-wrap{display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:2rem 0}
+    .voice-orb{width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--gold-l),var(--gold),#d4942a);box-shadow:0 0 40px rgba(232,168,56,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s}
+    .voice-orb:hover{transform:scale(1.05)}
+    .voice-orb .bars{display:flex;align-items:center;gap:3px}
+    .voice-orb .bar{width:4px;border-radius:2px;background:rgba(10,10,15,.7);animation:vbar 1.2s ease-in-out infinite}
+    .voice-orb .bar:nth-child(1){height:12px;animation-delay:0s}
+    .voice-orb .bar:nth-child(2){height:20px;animation-delay:.1s}
+    .voice-orb .bar:nth-child(3){height:28px;animation-delay:.2s}
+    .voice-orb .bar:nth-child(4){height:20px;animation-delay:.3s}
+    .voice-orb .bar:nth-child(5){height:12px;animation-delay:.4s}
+    @keyframes vbar{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+    .voice-status{color:var(--tb);font-size:.9rem;animation:fadeInOut 2s ease-in-out infinite}
+    @keyframes fadeInOut{0%,100%{opacity:.6}50%{opacity:1}}
+    .voice-hint{font-size:.7rem;color:var(--td);font-family:var(--fm)}
+    .end-btn{padding:.5rem 1.5rem;font-family:var(--fb);font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;border-radius:60px;border:none;cursor:pointer;background:rgba(212,101,74,.2);border:1px solid rgba(212,101,74,.3);color:var(--coral);transition:all .2s}
+    .end-btn:hover{background:rgba(212,101,74,.3)}
+    .input-group{position:relative;margin-bottom:1rem;width:100%}
+    .input-group input{width:100%;padding:.9rem 1rem;font-family:var(--fm);font-size:1rem;letter-spacing:.12em;text-align:center;text-transform:uppercase;background:rgba(255,255,255,.04);border:1.5px solid var(--gb);border-radius:14px;color:var(--txt);outline:none;transition:border-color .2s,box-shadow .2s}
+    .input-group input::placeholder{color:var(--td);font-family:var(--fb);font-size:.82rem;letter-spacing:normal;text-transform:none}
+    .input-group input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,168,56,.12)}
+    .input-group.error input{border-color:var(--coral)}
+    .input-group.success input{border-color:var(--mint)}
+    .status-msg{font-size:.78rem;min-height:1.2em;transition:color .2s;margin-bottom:.8rem}
+    .status-msg.error{color:var(--coral)}
+    .status-msg.success{color:var(--mint)}
+    .status-msg.info{color:var(--td)}
+    .btn-gold{display:inline-flex;align-items:center;justify-content:center;font-family:var(--fb);font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2rem;border-radius:60px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--gold),#d4942a);color:var(--bg);box-shadow:0 4px 25px rgba(232,168,56,.3);transition:transform .15s var(--sp),box-shadow .3s,opacity .2s;width:100%}
+    .btn-gold:hover:not(:disabled){box-shadow:0 8px 40px rgba(232,168,56,.5);transform:scale(1.02)}
+    .btn-gold:disabled{opacity:.5;cursor:not-allowed}
+    .btn-outline{display:inline-flex;align-items:center;justify-content:center;font-family:var(--fb);font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2rem;border-radius:60px;cursor:pointer;background:transparent;color:var(--gold);border:1.5px solid rgba(232,168,56,.35);width:100%;text-decoration:none;transition:all .2s}
+    .btn-outline:hover{background:var(--gold-dim)}
+    .spinner{display:inline-block;width:18px;height:18px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:spin .6s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .checkmark{width:64px;height:64px;border-radius:50%;background:var(--gold-dim);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem}
+    .footer{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:.5rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--gb);background:rgba(10,10,15,.8);backdrop-filter:blur(10px)}
+    .footer-brand{font-size:.65rem;color:var(--td)}.footer-brand a{color:var(--gold);text-decoration:none}
+    #phase-interview{max-width:680px;height:100%;padding:0}
+    #phase-interview.active{display:flex;flex-direction:column}
+    .interview-wrap{flex:1;display:flex;flex-direction:column;padding:3.5rem 1.2rem 3rem;min-height:0;width:100%}
+    @media(max-width:500px){.card{padding:1.8rem 1.4rem;border-radius:18px}h1{font-size:1.5rem}.blendy-hero{width:140px}.starters{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="bg-layer"><img src="assets/bg-entrance.webp" alt=""></div>
+  <div class="bg-overlay"></div>
+  <div class="noise"></div>
+  <div class="top-bar">
+    <a href="/" class="logo">Blend<span>In</span></a>
+    <a href="/" class="back" id="backLink">&larr; Torna al lounge</a>
+  </div>
+  <div class="main">
+    <!-- PHASE 1: Ticket -->
+    <div id="phase-ticket" class="phase active">
+      <div class="card">
+        <div class="blendy-hero"><img src="assets/blendy_ticket.png" alt="Blendy"></div>
+        <h1>Benvenuto al <span class="ac">lounge.</span></h1>
+        <p class="subtitle">Inserisci il codice del tuo biglietto per iniziare.</p>
+        <div class="input-group" id="ticketGroup">
+          <input type="text" id="ticketInput" placeholder="es. BLN-2026-XKFV" maxlength="16" autocomplete="off" spellcheck="false">
+        </div>
+        <p class="status-msg" id="ticketMsg">&nbsp;</p>
+        <button class="btn-gold" id="ticketBtn" onclick="validateTicket()">Entra</button>
+      </div>
+    </div>
+    <!-- PHASE 2: Interview (Sergio fold) -->
+    <div id="phase-interview" class="phase">
+      <div class="interview-wrap">
+        <div id="welcomeState" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+          <div class="blendy-hero"><img src="assets/modal_blendy.png" alt="Blendy"></div>
+          <div class="status-bar"><div class="status-dot"></div><span class="status-text">Blendy online</span></div>
+          <h1>Ciao, sono <span class="ac">Blendy.</span></h1>
+          <p class="subtitle">Il tuo barista AI. Chiacchieriamo 5 minuti per conoscerti e trovarti il tavolo perfetto.</p>
+          <div class="starters">
+            <div class="starter" onclick="selectStarter('Sono pronto, iniziamo!')">Sono pronto, iniziamo!</div>
+            <div class="starter" onclick="selectStarter('Dimmi cosa devo fare')">Dimmi cosa devo fare</div>
+            <div class="starter" onclick="selectStarter('Preferisco scrivere')">Preferisco scrivere</div>
+            <div class="starter" onclick="selectStarter('Ho solo 5 minuti')">Ho solo 5 minuti</div>
+          </div>
+          <p class="disclaimer">Blendy e un AI. I tuoi dati sono usati solo per questo evento.</p>
+        </div>
+        <div id="chatState" style="display:none;flex:1;flex-direction:column;min-height:0;width:100%">
+          <div class="chat-area" id="chatMessages"></div>
+        </div>
+        <div id="voiceState" style="display:none;flex:1;flex-direction:column;align-items:center;justify-content:center">
+          <div class="voice-orb-wrap">
+            <div class="voice-orb" onclick="endConvo()">
+              <div class="bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
+            <p class="voice-status" id="voiceStatusText">Connessione in corso...</p>
+            <p class="voice-hint">Tocca per terminare</p>
+            <button class="end-btn" onclick="endConvo()">Termina chiamata</button>
+          </div>
+        </div>
+        <div class="input-bar" id="interviewInputBar">
+          <button class="mode-btn" id="modeToggle" onclick="toggleVoiceMode()" title="Passa alla voce">
+            <svg id="modeMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+            <svg id="modeChatIcon" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 0 1-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </button>
+          <input type="text" class="chat-input" id="chatInput" placeholder="Descrivi la tua situazione...">
+          <button class="send-btn" id="sendBtn" onclick="handleSend()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- PHASE 3: Completed -->
+    <div id="phase-complete" class="phase">
+      <div class="card">
+        <div class="checkmark">&#10003;</div>
+        <h1>Grazie!</h1>
+        <p class="subtitle" style="margin-bottom:1.2rem">La tua intervista e completa. Blendy ora conosce il tuo profilo e trovera il tavolo perfetto per te.</p>
+        <p class="subtitle">Ci vediamo all'evento!</p>
+        <a href="/" class="btn-outline">Torna al lounge</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="footer-brand"><strong>BlendIn</strong> by <a href="https://piirz.com">PiirZ Digital</a></span>
+    <span class="footer-brand">GDPR by design</span>
+  </div>
+  <script>
+    var API = 'https://api.blendin.app';
+    var AGENT_ID = 'agent_8301kkxg388qec7s5nnp3vy7rh3x';
+    var ticketCode = '', sessionToken = '', conversation = null;
+    var currentMode = 'chat', chatSessionStarted = false, voiceSessionStarted = false;
+    var isLoading = false;
+
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('ticket')) {
+      document.getElementById('ticketInput').value = params.get('ticket');
+      window.addEventListener('load', function() { setTimeout(validateTicket, 400); });
+    }
+
+    document.getElementById('ticketInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') validateTicket(); });
+    document.getElementById('ticketInput').addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+      document.getElementById('ticketGroup').classList.remove('error','success');
+      document.getElementById('ticketMsg').innerHTML = '&nbsp;';
+    });
+
+    document.getElementById('chatInput').addEventListener('input', function() {
+      document.getElementById('sendBtn').classList.toggle('enabled', this.value.trim().length > 0);
+    });
+    document.getElementById('chatInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+    });
+
+    document.getElementById('chatInput').addEventListener('focus', function() {
+      window.scrollTo(0, 0);
+      document.body.style.position = 'fixed';
+      document.body.style.top = '0'; document.body.style.left = '0'; document.body.style.right = '0';
+    });
+    document.getElementById('chatInput').addEventListener('blur', function() {
+      document.body.style.position = ''; document.body.style.top = '';
+      document.body.style.left = ''; document.body.style.right = '';
+    });
+
+    function showPhase(id) {
+      document.querySelectorAll('.phase').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById(id).classList.add('active');
+    }
+    function setMsg(text, type) {
+      var el = document.getElementById('ticketMsg');
+      el.textContent = text; el.className = 'status-msg ' + type;
+    }
+    function setBtnLoading(btn, loading) {
+      if (loading) { btn.disabled = true; btn.dataset.origText = btn.textContent; btn.innerHTML = '<span class="spinner"></span>'; }
+      else { btn.disabled = false; btn.textContent = btn.dataset.origText || 'Entra'; }
+    }
+
+    function validateTicket() {
+      var code = document.getElementById('ticketInput').value.trim();
+      if (!code) { document.getElementById('ticketGroup').classList.add('error'); setMsg('Inserisci il codice del biglietto.', 'error'); return; }
+      var btn = document.getElementById('ticketBtn');
+      setBtnLoading(btn, true); setMsg('Verifica in corso...', 'info');
+      fetch(API + '/api/tickets/validate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: code }) })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.valid) {
+            ticketCode = code;
+            document.getElementById('ticketGroup').classList.add('success');
+            setMsg('Biglietto valido!', 'success');
+            setTimeout(function() {
+              showPhase('phase-interview');
+              document.getElementById('backLink').style.display = 'none';
+              fetch(API + '/api/tickets/redeem', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: ticketCode }) })
+                .then(function(r) { return r.json(); })
+                .then(function(d) { if (d.session_token) sessionToken = d.session_token; })
+                .catch(function(e) { console.error('Redeem error', e); });
+            }, 500);
+          } else {
+            document.getElementById('ticketGroup').classList.add('error');
+            var m = data.message || '';
+            if (m.indexOf('utilizzato') > -1 || m.indexOf('uso') > -1) setMsg('Questo biglietto e gia stato utilizzato.', 'error');
+            else if (m.indexOf('scaduto') > -1) setMsg('Questo biglietto e scaduto.', 'error');
+            else setMsg('Biglietto non valido. Controlla il codice.', 'error');
+          }
+          setBtnLoading(btn, false);
+        })
+        .catch(function(err) { document.getElementById('ticketGroup').classList.add('error'); setMsg('Errore di connessione.', 'error'); setBtnLoading(btn, false); });
+    }
+
+    function selectStarter(text) {
+      var input = document.getElementById('chatInput');
+      input.value = text;
+      input.focus();
+      document.getElementById('sendBtn').classList.add('enabled');
+    }
+
+    function startChatSession() {
+      if (chatSessionStarted) return Promise.resolve();
+      chatSessionStarted = true;
+      return import('https://cdn.jsdelivr.net/npm/@elevenlabs/client@0.15.2/+esm')
+        .then(function(mod) {
+          return mod.Conversation.startSession({
+            agentId: AGENT_ID,
+            dynamicVariables: { session_token: sessionToken },
+            textOnly: true
+          });
+        })
+        .then(function(conv) {
+          conversation = conv;
+          conversation.on('message', function(msg) {
+            var text = msg.message || msg.text || '';
+            var role = (msg.source === 'user' || msg.role === 'user') ? 'user' : 'agent';
+            if (role === 'agent' && text) { addMessage('agent', text); setLoadingState(false); }
+          });
+          conversation.on('statusChange', function(s) {
+            if (s.status === 'disconnected') showPhase('phase-complete');
+          });
+        })
+        .catch(function(err) { console.error('Chat session error:', err); chatSessionStarted = false; });
+    }
+
+    function handleSend() {
+      var input = document.getElementById('chatInput');
+      var text = input.value.trim();
+      if (!text || isLoading) return;
+      document.getElementById('welcomeState').style.display = 'none';
+      var cs = document.getElementById('chatState');
+      cs.style.display = 'flex';
+      addMessage('user', text);
+      input.value = '';
+      document.getElementById('sendBtn').classList.remove('enabled');
+      setLoadingState(true);
+      if (!chatSessionStarted) {
+        startChatSession().then(function() {
+          return new Promise(function(r) { setTimeout(r, 500); });
+        }).then(function() {
+          if (conversation) conversation.sendUserMessage(text);
+          else { addMessage('agent', 'Errore di connessione. Riprova.'); setLoadingState(false); }
+        });
+      } else {
+        if (conversation) conversation.sendUserMessage(text);
+      }
+    }
+
+    function toggleVoiceMode() {
+      if (currentMode === 'chat') {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+          .then(function(stream) {
+            stream.getTracks().forEach(function(t) { t.stop(); });
+            currentMode = 'voice'; updateModeUI();
+            if (conversation) { try { conversation.endSession(); } catch(e) {} chatSessionStarted = false; conversation = null; }
+            document.getElementById('welcomeState').style.display = 'none';
+            document.getElementById('chatState').style.display = 'none';
+            document.getElementById('voiceState').style.display = 'flex';
+            document.getElementById('chatInput').disabled = true;
+            document.getElementById('chatInput').placeholder = 'Voce attiva...';
+            document.getElementById('voiceStatusText').textContent = 'Connessione in corso...';
+            return import('https://cdn.jsdelivr.net/npm/@elevenlabs/client@0.15.2/+esm');
+          })
+          .then(function(mod) {
+            return mod.Conversation.startSession({
+              agentId: AGENT_ID,
+              dynamicVariables: { session_token: sessionToken }
+            });
+          })
+          .then(function(conv) {
+            conversation = conv; voiceSessionStarted = true;
+            document.getElementById('voiceStatusText').textContent = 'In ascolto...';
+            conversation.on('modeSpeaking', function(speaking) {
+              document.getElementById('voiceStatusText').textContent = speaking ? 'Blendy sta parlando...' : 'In ascolto...';
+            });
+            conversation.on('statusChange', function(s) {
+              if (s.status === 'disconnected') showPhase('phase-complete');
+            });
+          })
+          .catch(function(err) {
+            console.error('Voice error:', err);
+            currentMode = 'chat'; updateModeUI();
+            document.getElementById('voiceState').style.display = 'none';
+            document.getElementById('chatInput').disabled = false;
+            document.getElementById('chatInput').placeholder = 'Descrivi la tua situazione...';
+          });
+      } else {
+        currentMode = 'chat'; updateModeUI();
+        if (voiceSessionStarted && conversation) {
+          try { conversation.endSession(); } catch(e) {}
+          voiceSessionStarted = false; conversation = null; chatSessionStarted = false;
+        }
+        document.getElementById('voiceState').style.display = 'none';
+        document.getElementById('chatState').style.display = 'flex';
+        document.getElementById('chatInput').disabled = false;
+        document.getElementById('chatInput').placeholder = 'Descrivi la tua situazione...';
+      }
+    }
+
+    function updateModeUI() {
+      var btn = document.getElementById('modeToggle');
+      document.getElementById('modeMicIcon').style.display = currentMode === 'voice' ? 'none' : 'block';
+      document.getElementById('modeChatIcon').style.display = currentMode === 'voice' ? 'block' : 'none';
+      if (currentMode === 'voice') btn.classList.add('voice-active');
+      else btn.classList.remove('voice-active');
+    }
+
+    function endConvo() {
+      if (conversation) { try { conversation.endSession(); } catch(e) {} }
+      showPhase('phase-complete');
+    }
+
+    function addMessage(role, text) {
+      var area = document.getElementById('chatMessages');
+      var typing = document.getElementById('typingIndicator');
+      if (typing) typing.remove();
+      var div = document.createElement('div');
+      div.className = 'msg-bubble ' + (role === 'user' ? 'msg-user' : 'msg-agent');
+      if (role === 'agent') {
+        div.innerHTML = '<span class="msg-label">BLENDY</span>' + escapeHtml(text);
+      } else { div.textContent = text; }
+      area.appendChild(div);
+      area.scrollTop = area.scrollHeight;
+    }
+
+    function setLoadingState(loading) {
+      isLoading = loading;
+      var area = document.getElementById('chatMessages');
+      var typing = document.getElementById('typingIndicator');
+      if (loading && !typing) {
+        typing = document.createElement('div');
+        typing.id = 'typingIndicator';
+        typing.className = 'msg-bubble msg-agent';
+        typing.innerHTML = '<span class="msg-label">BLENDY</span><div class="typing-dots"><span></span><span></span><span></span></div>';
+        area.appendChild(typing);
+        area.scrollTop = area.scrollHeight;
+      } else if (!loading && typing) { typing.remove(); }
+    }
+
+    function escapeHtml(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+  </script>
+</body>
+</html>+ '%, ' + (0.7 + (1-cd)*0.3) + ')'
+            : 'hsla(38, 92%, ' + (50 + cd * 15) + '%, 0.2)';
+          ctx.beginPath();
+          ctx.roundRect(i * (BW + gap), (H - h) / 2, BW, h, 2);
+          ctx.fill();
+        }
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  </script>
+</body>
+</html>

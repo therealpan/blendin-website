@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "sito-v2",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8788", "--directory", "sito-v2"],
+      "port": 8788
+    },
+    {
       "name": "blendin-static",
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8787"],
