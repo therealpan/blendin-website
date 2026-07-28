@@ -41,6 +41,53 @@
       position: absolute; width: 1px; height: 1px; overflow: hidden;
       clip-path: inset(50%); white-space: nowrap;
     }
+    /* ---- Chrome scuro -------------------------------------------------------
+       Il motore è scritto per un tema chiaro: usa #fff come superficie di nav,
+       CTA e label, e --sw-ink come testo sopra. Con --sw-ink crema quelle coppie
+       diventano bianco-su-bianco (misurato 1.06:1). Qui le superfici tornano
+       scure e il testo chiaro. Il motore incapsula il suo CSS in @layer sw,
+       quindi queste regole non-layered vincono senza !important. ------------- */
+
+    /* velo in alto: tiene leggibile la barra anche quando la camera passa su un
+       frame luminoso (il finale con le lucine) */
+    .sw-topbar::before {
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(180deg, rgba(10, 10, 15, .72) 0%, rgba(10, 10, 15, .38) 55%, transparent 100%);
+    }
+    .sw-brand { flex: none; }   /* senza questo il logo viene schiacciato a zero dal flex */
+
+    .sw-nav {
+      background: rgba(10, 10, 15, .62);
+      border-color: rgba(232, 168, 56, .22);
+    }
+    .sw-nav__item { color: rgba(240, 237, 230, .72); }
+    .sw-nav__item:hover { color: #f0ede6; background: rgba(240, 237, 230, .08); }
+    .sw-nav__item.is-active { color: #0a0a0f; background: var(--sw-accent); }
+
+    /* pillole d'azione: oro con testo quasi nero, come i bottoni della v1 */
+    .sw-topcta,
+    .sw-btn--primary {
+      color: #0a0a0f;
+      background: linear-gradient(135deg, var(--sw-accent), #d4942a);
+    }
+    .sw-btn--ghost {
+      color: #f0ede6;
+      border-color: rgba(240, 237, 230, .35);
+      background: rgba(10, 10, 15, .35);
+    }
+
+    .sw-route__label {
+      color: #f0ede6;
+      background: rgba(10, 10, 15, .82);
+      border-color: rgba(232, 168, 56, .22);
+    }
+
+    .sw-hint {
+      color: rgba(240, 237, 230, .8);
+      text-shadow: 0 1px 10px rgba(10, 10, 15, .9);
+    }
+    .sw-hint i { border-color: rgba(240, 237, 230, .5); }
+
     /* film grain, same treatment as the v1 site */
     body::after {
       content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: .035;

@@ -26,6 +26,33 @@ il proprio CSS in `@layer sw`, quindi le regole della pagina vincono senza `!imp
 Il testo "BlendIn" resta nel DOM ma nascosto visivamente — serve a dare un nome
 accessibile al link del brand. Se cambi il logo, non cancellarlo.
 
+## Perché in `index.html` c'è un blocco "chrome scuro"
+
+`scrub-engine.js` è scritto per un **tema chiaro**: usa `#fff` come superficie di nav,
+CTA, bottone primario ed etichette della route, e `--sw-ink` come testo sopra quelle
+superfici. Con un tema scuro `--sw-ink` è crema, quindi ogni coppia diventa
+bianco-su-bianco: il CTA "Parliamone" misurava **1,06:1** di contrasto.
+
+Il blocco di override in `index.html` riporta quelle superfici a scuro. Contrasti dopo
+la correzione (WCAG AA richiede 4,5:1):
+
+| elemento | prima | dopo |
+|---|---|---|
+| CTA barra / bottone primario | 1,06 | 9,49 |
+| voci del menu | ~1,05 | 8,90 |
+| etichetta route | ~1,05 | 16,89 |
+| hint "scorri" | variabile sul frame | 10,83 |
+
+C'è anche un velo sfumato dietro la barra (`.sw-topbar::before`): senza, il chrome
+sparisce quando la camera passa su un frame luminoso.
+
+`.sw-brand{flex:none}` impedisce che il logo venga schiacciato a zero dal flex della
+barra alle larghezze intermedie (verificato a 880px, il caso peggiore sopra il
+breakpoint mobile).
+
+**Se aggiorni `scrub-engine.js`, ricontrolla questo blocco**: se un giorno il motore
+diventasse theme-aware, gli override andrebbero rimossi invece che accumulati.
+
 ## Com'è fatto
 
 È **una sola ripresa continua senza tagli**, spezzata in 7 clip da 8s. Ogni clip parte
