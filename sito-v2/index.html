@@ -7,8 +7,14 @@
   <meta name="description" content="Scorri e attraversa il lounge di BlendIn: da una sala di tavoli casuali a una sala dove ogni connessione conta." />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0a0a0f" />
   <link rel="preload" href="assets/entrance.webp" as="image" />
+  <link rel="preload" href="assets/brand/logo.png" as="image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -21,6 +27,19 @@
       --sw-accent: #e8a838;
       --sw-font-display: 'Playfair Display', Georgia, serif;
       --sw-font-body: 'DM Sans', system-ui, sans-serif;
+    }
+    /* Real BlendIn wordmark in place of the engine's generated mark. The engine wraps its
+       own CSS in @layer sw, so these plain rules win without !important. The name stays in
+       the DOM (visually hidden) so the brand link keeps its accessible name. */
+    .sw-brand__mark {
+      width: 116px; height: 26px; border-radius: 0; box-shadow: none;
+      background: url("assets/brand/logo.png") left center / contain no-repeat;
+      /* the wordmark is white — this keeps it legible when the camera passes a bright frame */
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .75));
+    }
+    .sw-brand__name {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip-path: inset(50%); white-space: nowrap;
     }
     /* film grain, same treatment as the v1 site */
     body::after {

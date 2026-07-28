@@ -6,12 +6,25 @@ a parte i font Google.
 ```
 index.html          la pagina (monta il motore e contiene tutta la copy IT)
 interview.html      demo intervista (linkata dal CTA secondario)
+manifest.json       PWA + icone
+favicon.ico
 assets/
   scrub-engine.js   motore scroll→camera, vanilla JS, zero dipendenze
   *.webp            poster/fallback: il PRIMO frame di ogni clip
   vid/*.mp4         i 7 leg della ripresa continua
+  brand/            wordmark + set icone (dal brand kit v1)
 _src/               master grezzi 1080p + still 2k — NON serve online
 ```
+
+## Logo
+
+Il marchio in alto a sinistra è `assets/brand/logo.png`, cioè `assets/logo-dark.png` della
+v1 (wordmark bianco+oro, la versione per fondi scuri) ridimensionato a 380px. Sostituisce
+il segnaposto generato dal motore via due regole CSS in `index.html`: il motore incapsula
+il proprio CSS in `@layer sw`, quindi le regole della pagina vincono senza `!important`.
+
+Il testo "BlendIn" resta nel DOM ma nascosto visivamente — serve a dare un nome
+accessibile al link del brand. Se cambi il logo, non cancellarlo.
 
 ## Com'è fatto
 
@@ -47,7 +60,9 @@ metti un'immagine diversa si vede un lampo al cambio scena.
 
 - `index.html` ha `<meta name="robots" content="noindex, nofollow">` — toglilo quando è
   il momento.
-- Nessun `manifest.json` / `robots.txt` / `sitemap.xml` in questa cartella: se sostituisce
-  il sito attuale vanno ripresi dalla root della v1.
+- Mancano `robots.txt` e `sitemap.xml`: se questa cartella sostituisce il sito attuale
+  vanno ripresi dalla root della v1.
+- Mancano i meta Open Graph / Twitter: i link condivisi non mostrano anteprima. In v1
+  c'è `assets/og-image.jpg` (1200x630) già pronto da riusare.
 - Copy solo in italiano. Le altre 4 lingue si aggiungono senza rigenerare nulla: nei video
   non c'è testo.
