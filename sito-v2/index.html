@@ -5,7 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>BlendIn — Entra nel lounge</title>
   <meta name="description" content="Scorri e attraversa il lounge di BlendIn: da una sala di tavoli casuali a una sala dove ogni connessione conta." />
+  <meta name="author" content="PiirZ Digital" />
+
+  <!-- Resta noindex finché questa cartella vive sotto /sito-v2/: in produzione la radice
+       serve ancora la v1, e due copie indicizzate sarebbero contenuto duplicato.
+       AL GO-LIVE: cancellare la riga qui sotto. È l'unica da toccare. -->
   <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Canonical e OG puntano già alla radice: sono gli URL definitivi, validi dal
+       momento in cui questa cartella diventa il sito. -->
+  <link rel="canonical" href="https://blendin.piirz.eu/" />
+
+  <!-- Open Graph — anteprima dei link condivisi (LinkedIn, WhatsApp, Slack, Facebook) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://blendin.piirz.eu/" />
+  <meta property="og:title" content="BlendIn — La community che conosce davvero i suoi membri" />
+  <meta property="og:description" content="L'AI che profila i partecipanti ai tuoi eventi di networking e compone tavoli dove ogni connessione conta." />
+  <meta property="og:image" content="https://blendin.piirz.eu/assets/og-image.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="BlendIn — AI-powered profiling e matching per eventi di networking" />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:site_name" content="BlendIn by PiirZ Digital" />
+
+  <!-- Twitter / X — summary_large_image usa la stessa immagine 1200×630 -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BlendIn — La community che conosce davvero i suoi membri" />
+  <meta name="twitter:description" content="L'AI che profila i partecipanti ai tuoi eventi e compone tavoli dove ogni connessione conta." />
+  <meta name="twitter:image" content="https://blendin.piirz.eu/assets/og-image.jpg" />
+  <meta name="twitter:image:alt" content="BlendIn — AI-powered profiling e matching per eventi di networking" />
+
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicon-16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png" />
@@ -18,6 +48,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Dati strutturati: stessa entità dichiarata dalla v1, così il passaggio non azzera
+       quello che i motori hanno già associato al dominio. -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BlendIn","url":"https://blendin.piirz.eu","description":"AI-powered profiling e matching intelligente per eventi di networking.","applicationCategory":"BusinessApplication","operatingSystem":"Web, WhatsApp","image":"https://blendin.piirz.eu/assets/og-image.jpg","creator":{"@type":"Organization","name":"PiirZ Digital","url":"https://piirz.com","email":"blendin@piirz.com"}}</script>
+
   <style>
     html, body { margin: 0; background: #0a0a0f; }
     :root, .sw-root {
@@ -75,6 +110,19 @@
       border-color: rgba(240, 237, 230, .35);
       background: rgba(10, 10, 15, .35);
     }
+    /* Il secondo CTA in barra. Serve una regola qui e non basta quella del motore:
+       la regola `.sw-topcta` poco sopra non è layered, quindi batte
+       `.sw-topcta--ghost` che sta dentro @layer sw. Senza questa, il ghost
+       tornerebbe oro identico al pieno. */
+    .sw-topcta--ghost {
+      color: #f0ede6;
+      background: rgba(10, 10, 15, .35);
+      border: 1px solid rgba(240, 237, 230, .35);
+    }
+    .sw-topcta--ghost:hover { background: rgba(240, 237, 230, .1); }
+    /* stessa ragione: la regola non-layered qui sopra vincerebbe anche sul display:none
+       del motore, quindi il nascondimento sotto i 1240px va ripetuto */
+    @media (max-width: 1240px) { .sw-topcta--ghost { display: none; } }
 
     .sw-route__label {
       color: #f0ede6;
@@ -94,17 +142,152 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 150px;
     }
+
+    /* ---- Footer ---------------------------------------------------------
+       Sta nel flusso normale, dopo il container del motore: il motore occupa
+       lo schermo con elementi fixed, ma la sua altezza di scroll finisce col
+       .sw-track, quindi il footer risale sopra l'ultimo fotogramma quando lo
+       scroll arriva in fondo. È HTML statico, non generato da JS: i link
+       legali devono esistere anche per un crawler che non esegue script. -- */
+    .bl-foot {
+      position: relative; z-index: 70;
+      background: #0a0a0f;
+      border-top: 1px solid rgba(232, 168, 56, .22);
+      padding: clamp(32px, 5vw, 52px) clamp(18px, 5vw, 64px) calc(clamp(28px, 4vw, 44px) + env(safe-area-inset-bottom));
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: .82rem; line-height: 1.7;
+      color: rgba(240, 237, 230, .62);
+    }
+    /* sfumatura sopra il bordo: senza, l'ultimo fotogramma viene tagliato di netto */
+    .bl-foot::before {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 96px;
+      pointer-events: none;
+      background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 15, .78) 72%, #0a0a0f 100%);
+    }
+    .bl-foot__in {
+      max-width: 1180px; margin: 0 auto;
+      display: grid; gap: clamp(20px, 3vw, 40px);
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      align-items: start;
+    }
+    .bl-foot__brand {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.15rem; font-weight: 700; color: #f0ede6;
+      margin: 0 0 6px;
+    }
+    .bl-foot p { margin: 0; }
+    .bl-foot__legal { display: flex; flex-wrap: wrap; align-items: center; gap: 0 6px; margin-top: 10px; }
+    .bl-foot__legal span { color: rgba(240, 237, 230, .28); }
+    .bl-foot a {
+      color: rgba(240, 237, 230, .82); text-decoration: none;
+      /* l'area cliccabile arriva a 44px senza gonfiare la riga */
+      /* area cliccabile a 44px senza padding orizzontale: quello staccherebbe
+         la punteggiatura dal testo del link */
+      padding: 14px 0; margin: -14px 0;
+      border-bottom: 1px solid transparent;
+      transition: color 180ms cubic-bezier(.23, 1, .32, 1),
+                  border-color 180ms cubic-bezier(.23, 1, .32, 1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .bl-foot a:hover { color: var(--sw-accent); border-bottom-color: rgba(232, 168, 56, .5); }
+    }
+    .bl-foot a:focus-visible {
+      outline: 2px solid var(--sw-accent); outline-offset: 3px; border-radius: 2px;
+    }
+    .bl-foot__claims {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+      padding: 0; margin: 0;
+    }
+    .bl-foot__claims li {
+      list-style: none;
+      border: 1px solid rgba(240, 237, 230, .16); border-radius: 999px;
+      padding: 6px 13px; font-size: .74rem; letter-spacing: .01em;
+      color: rgba(240, 237, 230, .7);
+    }
+    .bl-foot__co {
+      margin-top: 18px; font-size: .72rem; line-height: 1.6;
+      /* .38 misurava 3,23:1 sui pixel renderizzati, sotto la soglia AA */
+      color: rgba(240, 237, 230, .55);
+    }
+    @media (max-width: 760px) {
+      .bl-foot__in { grid-template-columns: 1fr; }
+      .bl-foot__claims { flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
+    }
+    /* Quando il footer entra in campo, il chrome del motore si toglie di mezzo:
+       copy, rotta e hint sono fixed e resterebbero sopra il testo del footer.
+       Solo opacità, nessun movimento, quindi regge anche a motion ridotto. */
+    .sw-copylayer, .sw-route, .sw-hint {
+      transition: opacity 240ms cubic-bezier(.23, 1, .32, 1);
+    }
+    body.is-foot .sw-copylayer,
+    body.is-foot .sw-route,
+    body.is-foot .sw-hint { opacity: 0; }
   </style>
 </head>
 <body>
   <div id="top"></div>
   <div id="world"></div>
 
+  <footer class="bl-foot" id="foot">
+    <div class="bl-foot__in">
+      <div>
+        <p class="bl-foot__brand">BlendIn</p>
+        <p>Un prodotto <a href="https://piirz.com">PiirZ Digital</a>. Scrivici a
+          <a href="mailto:blendin@piirz.com">blendin@piirz.com</a>.</p>
+        <!-- Percorsi relativi perché le 15 pagine legali stanno nella root del repo,
+             un livello sopra questa cartella. Quando la landing viene integrata in
+             blendin.app diventano assoluti (/privacy.html …) e le pagine vanno portate
+             su quel dominio: oggi vivono solo su blendin.piirz.eu. -->
+        <p class="bl-foot__legal">
+          <a href="../privacy.html">Privacy</a><span>/</span>
+          <a href="../cookie.html">Cookie</a><span>/</span>
+          <a href="../terms.html">Termini</a>
+        </p>
+        <p class="bl-foot__co">
+          PIIRZ Digital Limited, 63 Level 1 Unit 17 Connecticlub Business Center,
+          Triq il-Ballot, Mosta MST 4000, Malta<br>
+          Registro delle imprese C114280 &middot; VAT MT32479333
+        </p>
+      </div>
+      <ul class="bl-foot__claims">
+        <li>GDPR by design</li>
+        <li>Dati cancellati 30 giorni dopo l'evento</li>
+        <li>Età minima 16 anni</li>
+      </ul>
+    </div>
+  </footer>
+
   <script src="assets/scrub-engine.js"></script>
   <script>
+    // I due link in cima, in un posto solo perché ricorrono anche nell'ultima scena.
+    //
+    // LOUNGE: dove si entra col codice del biglietto. Oggi punta all'app in produzione,
+    // perché finché questa cartella è servita da sola non esiste una rotta /lounge.
+    // Quando la landing viene integrata in blendin-chat (rotte / e /lounge) diventa
+    // '/lounge' e resta l'unica riga da cambiare.
+    // I biglietti stampati dicono "inserisci il codice su blendin.app", quindi questo
+    // link deve restare raggiungibile in un click da qualunque punto della pagina.
+    const LOUNGE = 'https://blendin.app/';
+    const CALL   = 'https://cal.eu/piirz/30min';
+
+    // Il chrome del motore (copy, rotta, hint) è fixed: senza questo resterebbe
+    // sopra il footer quando ci si scrolla dentro. Un observer sul footer, niente
+    // listener di scroll: il lavoro lo fa il compositor, non il main thread.
+    new IntersectionObserver(
+      ([e]) => document.body.classList.toggle('is-foot', e.isIntersecting),
+      // scatta quando il footer è entrato per ~80px, non al primo pixel:
+      // così l'ultima scena tiene la sua copy fino a che il footer non è davvero lì
+      { rootMargin: '0px 0px -80px 0px' }
+    ).observe(document.getElementById('foot'));
+
     mountScrollWorld(document.getElementById('world'), {
       brand: { name: 'BlendIn', href: '#top' },
-      cta: { label: 'Parliamone', href: 'mailto:blendin@piirz.com' },
+      cta: [
+        // il pieno sta a destra, quindi le varianti sono dichiarate entrambe:
+        // l'ordine dell'array è l'ordine in pagina, non la gerarchia
+        { label: 'Parliamone', href: CALL, target: '_blank', variant: 'ghost' },
+        { label: 'Entra nel lounge', href: LOUNGE, variant: 'solid' },
+      ],
       hint: 'scorri per entrare',
       diveScroll: 1.4,
       crossfade: 0.12,   // seams are frame-locked but carry a micro-zoom delta; this hides it
@@ -171,9 +354,11 @@
           title: 'Ogni tavolo, una storia.',
           body: 'L’algoritmo compone la sala massimizzando le connessioni utili. Il tuo prossimo evento inizia qui.',
           tags: ['8 persone per tavolo', '< 30s di calcolo'],
+          // In chiusura l'azione commerciale passa in primo piano: chi è arrivato
+          // fin qui scorrendo è un organizzatore, non un partecipante col biglietto.
           cta: {
-            primary: { label: 'Parliamone', href: 'mailto:blendin@piirz.com' },
-            secondary: { label: 'Prova l’intervista', href: 'interview.html' },
+            primary: { label: 'Parliamone', href: CALL },
+            secondary: { label: 'Entra nel lounge', href: LOUNGE },
           },
         },
       ],

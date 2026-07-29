@@ -1,0 +1,11 @@
+# BlendIn · PIIRZ Digital Limited
+# Search engines and AI assistants are welcome to crawl and cite this site.
+#
+# NOTA: un robots.txt vale solo se servito dalla RADICE del dominio. Finché questa
+# cartella sta sotto /sito-v2/, questo file è inerte: fa fede quello della root del
+# repo. Diventa effettivo nel momento in cui sito-v2/ prende il posto della radice.
+User-agent: *
+Allow: /
+
+Sitemap: https://blendin.piirz.eu/sitemap.xml
+# AI-readable overview: https://blendin.piirz.eu/llms.txt

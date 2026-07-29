@@ -115,10 +115,22 @@ function mountScrollWorld(container, config) {
     topbar.appendChild(brand);
   }
   const nav = el('nav', 'sw-nav'); if (config.nav !== false) topbar.appendChild(nav);
-  if (config.cta && config.cta.label) {
-    const c = el('a', 'sw-topcta'); c.href = config.cta.href || '#'; c.textContent = config.cta.label;
+  // `cta` accepts a single {label, href} or an array of them. By default the first is
+  // solid and the rest are ghost, matching the primary/secondary pair used by the scene
+  // CTAs; `variant: 'ghost' | 'solid'` overrides that per item, so the solid one can sit
+  // on the right without reordering the array. Extra keys are passed through:
+  // `target`/`rel` for external links, `data` for arbitrary data-* attributes (used by
+  // the Next.js integration to hook a click handler without changing this file).
+  const ctas = Array.isArray(config.cta) ? config.cta : (config.cta ? [config.cta] : []);
+  ctas.filter(x => x && x.label).forEach((x, ci) => {
+    const ghost = x.variant ? x.variant === 'ghost' : ci > 0;
+    const c = el('a', 'sw-topcta' + (ghost ? ' sw-topcta--ghost' : ''));
+    c.href = x.href || '#'; c.textContent = x.label;
+    if (x.target) { c.target = x.target; c.rel = x.rel || 'noopener noreferrer'; }
+    else if (x.rel) c.rel = x.rel;
+    if (x.data) Object.keys(x.data).forEach(k => c.setAttribute('data-' + k, x.data[k]));
     topbar.appendChild(c);
-  }
+  });
 
   const stage = el('div', 'sw-stage');
   const copylayer = el('div', 'sw-copylayer');
@@ -147,7 +159,9 @@ function mountScrollWorld(container, config) {
     c.innerHTML =
       `<span class="sw-copy__num">${pad(i + 1)} / ${pad(N)}</span>` +
       (s.eyebrow ? `<span class="sw-copy__eyebrow">${esc(s.eyebrow)}</span>` : '') +
-      (s.title ? `<h2 class="sw-copy__title">${esc(s.title)}</h2>` : '') +
+      // First scene carries the page's h1: without it the document has no top-level
+      // heading at all, which reads as an untitled page to crawlers and screen readers.
+      (s.title ? `<${i ? 'h2' : 'h1'} class="sw-copy__title">${esc(s.title)}</${i ? 'h2' : 'h1'}>` : '') +
       (s.body ? `<p class="sw-copy__body">${esc(s.body)}</p>` : '') +
       (s.tags && s.tags.length ? `<ul class="sw-copy__tags">${s.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : '') +
       (s.cta ? `<div class="sw-copy__cta">${ctaBtns(s.cta)}</div>` : '');
@@ -225,7 +239,11 @@ function mountScrollWorld(container, config) {
       const local = clamp((y - s.start) / (s.end - s.start), 0, 1);
       s.target = s.linger ? lingerEase(local, s.linger) : local;
       let outside = 0;
-      if (y < s.start) outside = s.start - y; else if (y > s.end) outside = y - s.end;
+      // The last segment never fades out past its end: there is nothing behind it to
+      // reveal, so fading it just exposes the bare sky for the tail of the track (and
+      // for the whole height of a page footer, if one follows).
+      if (y < s.start) outside = s.start - y;
+      else if (y > s.end && i < NSEG - 1) outside = y - s.end;
       const op = smooth(1 - outside / fade);
       s.el.style.opacity = op; s.visible = op > 0.001;
       s.el.style.zIndex = (i === ci) ? '120' : String(100 + Math.round(op * 10));
@@ -374,6 +392,19 @@ function injectCSS() {
   .sw-nav__item{font:inherit;font-size:.82rem;color:var(--sw-ink-soft);border:0;background:transparent;cursor:pointer;padding:7px 14px;border-radius:999px;transition:color .25s,background .25s;}
   .sw-nav__item:hover{color:var(--sw-ink);} .sw-nav__item.is-active{color:#fff;background:var(--sw-accent);}
   .sw-topcta{text-decoration:none;font-weight:600;font-size:.9rem;color:#fff;background:var(--sw-ink);padding:10px 20px;border-radius:999px;white-space:nowrap;}
+  /* secondary top CTAs: outlined, so the pair reads as primary + secondary */
+  .sw-topcta--ghost{color:var(--sw-ink);background:transparent;border:1px solid color-mix(in srgb,var(--sw-ink) 35%,transparent);}
+  .sw-topcta--ghost:hover{background:color-mix(in srgb,var(--sw-ink) 10%,transparent);}
+  /* Two CTAs plus the nav don't fit between ~860 and ~1020px, and two alone don't fit
+     on a phone. Below 1020 the secondary ones drop out of the bar; the solid one stays,
+     because it is the action printed on the physical tickets. The dropped labels still
+     appear as buttons in the closing scene. */
+  @media (max-width:1240px){ .sw-topcta--ghost{display:none;} }
+  /* Between the nav's own breakpoint and 1180 the bar holds brand + 7 nav pills + one
+     CTA. Measured: at 880px that overflows by ~50px, so the pills tighten in that band.
+     Above 1240 the full-size pills and both CTAs fit without the nav wrapping. */
+  @media (min-width:861px) and (max-width:1240px){ .sw-nav__item{padding:6px 7px;font-size:.72rem;white-space:nowrap;} .sw-nav{gap:0;padding:4px;} }
+  @media (max-width:420px){ .sw-topcta{padding:9px 15px;font-size:.84rem;} }
   .sw-stage{position:fixed;inset:0;z-index:10;pointer-events:none;}
   .sw-scene{position:absolute;inset:0;opacity:0;overflow:hidden;will-change:opacity;}
   .sw-scene__video,.sw-scene__still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;}
