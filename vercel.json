@@ -1,24 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "comment": "blendin.piirz.eu ha smesso di essere un sito il 2026-07-29: la landing vive su blendin.app. L ordine conta, vince la prima regola che matcha.",
   "redirects": [
-    {
-      "comment": "la radice: /:path* non matcha il percorso vuoto, serve una regola sua",
-      "source": "/",
-      "destination": "https://blendin.app/",
-      "permanent": true
-    },
-    {
-      "comment": "le tre pagine legali italiane esistono anche a destinazione, stesso percorso",
-      "source": "/:doc(privacy|cookie|terms).html",
-      "destination": "https://blendin.app/:doc.html",
-      "permanent": true
-    },
-    {
-      "comment": "tutto il resto, comprese le 12 pagine legali in EN/FR/DE/ES e llms.txt, a destinazione non esiste: va alla home, non su un 404",
-      "source": "/:path*",
-      "destination": "https://blendin.app/",
-      "permanent": true
-    }
+    { "source": "/", "destination": "https://blendin.app/", "permanent": true },
+    { "source": "/:doc(privacy|cookie|terms).html", "destination": "https://blendin.app/:doc.html", "permanent": true },
+    { "source": "/:path*", "destination": "https://blendin.app/", "permanent": true }
   ]
 }
